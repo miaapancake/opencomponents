@@ -1,0 +1,51 @@
+{
+  "name": "opencomponents",
+  "version": "0.0.1",
+  "description": "Component Library For OpenThingies",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "typings": "lib/index.d.ts",
+  "repository": "https://github.com/OpenThingies/OpenComponents",
+  "author": "The OpenThingies Team",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup && node ./tools/compilesass.js",
+    "build-types": "yarn tsc -d --emitDeclarationOnly --outDir types",
+    "storybook": "start-storybook --debug-webpack -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.9",
+    "@storybook/core": "^6.5.9",
+    "@storybook/core-common": "^6.5.9",
+    "@storybook/core-server": "^6.5.9",
+    "@storybook/manager-webpack5": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
+    "@types/react": "^18.0.15",
+    "autoprefixer": "^10.4.7",
+    "chalk": "^4",
+    "css-loader": "^6.7.1",
+    "postcss": "^8.4.14",
+    "sass": "^1.54.0",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
+    "tslib": "^2.4.0",
+    "tsup": "^6.2.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-popper": "^2.3.0",
+    "react-textarea-autosize": "^8.3.4"
+  },
+  "packageManager": "yarn@3.2.1"
+}

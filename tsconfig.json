@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./types",
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "lib",
+    "node_modules",
+    "src/**/*.test.tsx",
+    "src/**/*.stories.tsx",
+  ],
+}

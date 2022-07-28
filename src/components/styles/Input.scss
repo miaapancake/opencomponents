@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
+
+.oc_input {
+    position: relative;
+    display: inline-block;
+    margin: 10px auto;
+    width: 100%;
+
+    border-radius: 5px;
+
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.2em;
+
+}
+
+.oc_input:focus-within {
+    box-shadow: 0 0 3pt 2pt #74b9ff;
+}
+
+.oc_input input, .oc_input textarea {
+    margin: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    outline: none;
+    background-color: transparent;
+
+    color: inherit;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.oc_text_input input, .oc_number_input input, .oc_input textarea {
+    width: 100%;
+    padding: 10px;
+}
+
+.oc_number_input {
+    display: inline-flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.oc_number_input input {
+  -moz-appearance: textfield;
+  width: calc(100% - 80px);
+  text-align: center;
+}
+
+.oc_number_input .oc_button {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: none;
+    user-select: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+
+.oc_text_area.oc_limited textarea {
+    margin-bottom: 20px;
+    line-height: 24px;
+}
+
+
+.oc_text_area .oc_area_counter {
+    position: absolute;
+    bottom: 7.5px;
+    right: 7.5px;
+    font-size: 1.1em;
+    color: #666;
+}

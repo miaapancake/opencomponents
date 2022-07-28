@@ -1,0 +1,50 @@
+
+.oc_select {
+    display: inline-block;
+    min-width: 150px;
+    max-width: 300px;
+    position: relative;
+    font-family: sans-serif;
+}
+
+.oc_select_value {
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+}
+
+
+.oc_select_value input {
+    padding: 10px;
+    pointer-events: none;
+    text-overflow: ellipsis;
+}
+
+.oc_select_list {
+    position: absolute;
+    display: inline-block;
+
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+
+    width: max-content;
+    min-width: 100%;
+    max-width: 400px;
+    max-height: 500px;
+    box-shadow: 1px 2px 3px rgba(0,0,0,.1);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.oc_select_item {
+    padding: 10px;
+    user-select: none;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 1.1em;
+}
+
+.oc_select_item.oc_selected {
+    background-color: #ffb6f9;
+}
