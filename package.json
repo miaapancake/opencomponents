@@ -30,6 +30,7 @@
     "autoprefixer": "^10.4.7",
     "chalk": "^4",
     "css-loader": "^6.7.1",
+    "lorem-ipsum": "^2.0.8",
     "postcss": "^8.4.14",
     "sass": "^1.54.0",
     "sass-loader": "^13.0.2",
@@ -45,7 +46,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-popper": "^2.3.0",
-    "react-textarea-autosize": "^8.3.4"
+    "react-textarea-autosize": "^8.3.4",
+    "uncontrollable": "^7.2.1"
   },
   "packageManager": "yarn@3.2.1"
 }

@@ -1,6 +1,7 @@
 import TextArea, { TextAreaProps } from '../TextArea';
 import React, { useCallback, useState } from 'react';
 import { useEffect } from '@storybook/addons';
+import './styles/global.scss';
 
 export default {
     title: "Text Area",

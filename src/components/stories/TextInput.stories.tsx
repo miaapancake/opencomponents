@@ -1,5 +1,6 @@
 import TextInput, { TextInputProps } from '../TextInput';
 import React, { useCallback, useEffect, useState } from 'react';
+import './styles/global.scss';
 
 export default {
     title: "Text Input",

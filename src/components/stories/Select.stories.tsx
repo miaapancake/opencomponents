@@ -1,5 +1,6 @@
 import Select, { SelectItem } from '../Select';
 import React, { useCallback, useState } from 'react';
+import './styles/global.scss';
 
 export default {
     title: "Select",
