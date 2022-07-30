@@ -39,7 +39,7 @@ export default function TextArea(props: TextAreaProps) {
             />
             {
                 props.maxLength && props.value.length ?
-                    <div style={{color}} className="oc_area_counter">
+                    <div style={{backgroundColor: color}} className="oc_area_counter">
                         {(props.maxLength-props.value.length)}
                     </div>
                 :

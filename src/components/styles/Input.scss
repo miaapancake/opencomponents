@@ -66,15 +66,21 @@
 }
 
 .oc_text_area.oc_limited textarea {
-    margin-bottom: 20px;
+    margin-bottom: 35px;
     line-height: 24px;
+    overflow-y: auto;
 }
 
 
 .oc_text_area .oc_area_counter {
     position: absolute;
     bottom: 7.5px;
-    right: 7.5px;
+    right: 15px;
+    min-width: 30px;
+    text-align: center;
     font-size: 1.1em;
-    color: #666;
+    color: #fff;
+    padding: 2.5px;
+    border-radius: 5px;
+
 }
