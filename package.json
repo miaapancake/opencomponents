@@ -9,7 +9,7 @@
   "author": "The OpenThingies Team",
   "license": "MIT",
   "scripts": {
-    "build": "tsup && node ./tools/compilesass.js",
+    "build": "tsup && node ./tools/compilesass.js src/components/styles lib/style.css",
     "build-types": "yarn tsc -d --emitDeclarationOnly --outDir types",
     "storybook": "start-storybook --debug-webpack -p 6006",
     "build-storybook": "build-storybook"
