@@ -5,3 +5,14 @@
 body {
     font-family: sans-serif;
 }
+
+.accordion_body {
+    padding: 20px;
+    background-color: #eaeaea;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.accordion_header {
+    padding: 10px;
+}
