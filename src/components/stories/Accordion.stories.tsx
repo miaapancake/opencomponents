@@ -10,8 +10,8 @@ export default {
 }
 
 const items = [
-    {id: 0, name: 'Emma', status: 'Cute'},
-    {id: 1, name: 'Mia', status: 'Hot'},
+    {id: 0, name: 'Bees', status: 'Cute'},
+    {id: 1, name: 'Fire', status: 'Hot'},
     {id: 2, name: 'Cats', status: 'Mean'},
     {id: 3, name: 'Mosqitos', status: 'Evil'},
     {id: 4, name: 'Dogs', status: 'Weird & Dumb'},

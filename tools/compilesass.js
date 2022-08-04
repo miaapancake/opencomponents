@@ -9,6 +9,7 @@ let {cyanBright, bold, green} = require('chalk');
 let [bin, scriptPath, srcPath, outputPath] = process.argv;
 
 
+if(!srcPath) throw "Please specify a source path";
 if(!outputPath) throw "Please specify an output path";
 
 async function getFiles(dir) {
