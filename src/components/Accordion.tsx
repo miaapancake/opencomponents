@@ -35,8 +35,6 @@ function Accordion(props: PropsWithChildren<AccordionProps>) {
         }),
         [selected, onSelect, alwaysOpen],
     );
-  
-    console.log(selected);
 
     return (
         <div className="oc_accordion" style={props.style}>
