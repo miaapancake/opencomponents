@@ -26,7 +26,7 @@ const Template = (args: any) => {
                 items.map(item => (
                     <Accordion.Item id={item.id}>
                         <Accordion.Header>
-                            <div>{item.name}</div>
+                            <div style={{padding: '10px'}}>{item.name}</div>
                         </Accordion.Header>
                         <Accordion.Body>
                             <div style={{padding: '20px', background: '#aeaeae', boxSizing: 'border-box', overflowY: 'auto', maxHeight: '500px'}}>{item.name} {item.name.endsWith('s') ? 'are' : 'is'} {item.status}</div>

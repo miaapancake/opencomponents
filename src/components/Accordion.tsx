@@ -33,7 +33,7 @@ function Accordion(props: PropsWithChildren<AccordionProps>) {
           onSelect,
           alwaysOpen,
         }),
-        [selected, onSelect, alwaysOpen],
+        [selected, onSelect, alwaysOpen]
     );
 
     return (
