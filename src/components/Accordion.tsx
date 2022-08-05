@@ -21,17 +21,16 @@ function Accordion(props: PropsWithChildren<AccordionProps>) {
     const {
         selected = props.defaultSelected,
         onSelect,
-        alwaysOpen,
-        ...controlledProps
+        alwaysOpen
     } = useUncontrolled(props, {
-        selected: 'onSelect'
+        selected: "onSelect"
     });
 
     const contextValue = useMemo(
         () => ({
-          selected,
-          onSelect,
-          alwaysOpen,
+            selected,
+            onSelect,
+            alwaysOpen,
         }),
         [selected, onSelect, alwaysOpen]
     );
@@ -52,4 +51,4 @@ export default Object.assign(Accordion,
         Body: AccordionBody,
         Header: AccordionHeader
     }   
-)
+);

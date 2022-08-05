@@ -1,6 +1,6 @@
-import React, { CSSProperties, useContext, useMemo } from 'react';
-import AccordionContext from './contexts/AccordionContext';
-import AccordionItemContext from './contexts/AccordionItemContext';
+import React, { CSSProperties, useContext, useMemo } from "react";
+import AccordionContext from "./contexts/AccordionContext";
+import AccordionItemContext from "./contexts/AccordionItemContext";
 import { classNames, PropsWithChildren, valueIn } from "./helpers";
 
 interface AccordionBodyProps {
@@ -16,6 +16,6 @@ export default function AccordionBody(props: PropsWithChildren<AccordionBodyProp
     
     return (
         <div className={classNames("oc_accordion_item_body", isSelected && "oc_selected")}  {...props} />
-    )
+    );
 
 }

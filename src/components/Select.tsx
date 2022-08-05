@@ -1,10 +1,10 @@
-import { createContext, CSSProperties, Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { usePopper } from 'react-popper';
-import React from 'react';
-import { cn, ComponentBase, PropsWithChildren } from './helpers';
+import { createContext, CSSProperties, Fragment, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { usePopper } from "react-popper";
+import React from "react";
+import { cn, ComponentBase, PropsWithChildren } from "./helpers";
 
-import './styles/Select.scss';
-import './styles/Input.scss';
+import "./styles/Select.scss";
+import "./styles/Input.scss";
 
 export interface SelectProps extends ComponentBase {
     value?: string | number | (string | number)[];
@@ -31,12 +31,12 @@ export default function Select(props: PropsWithChildren<SelectProps, SelectItemP
     const values: (string | number)[] = Array.isArray(props.value) ? props.value : props.value ? [props.value] : [];
 
     // Filter items to only the one's selected by values
-    const selected = items.filter(x => values!.includes(x.value));
+    const selected = items.filter(x => values.includes(x.value));
 
     // Initialize PopperJS with a 5px vertical offset 
     const { attributes, styles: popStyles } = usePopper(referenceElement, popperElement, {
         modifiers: [
-            {name: 'offset', options: { offset: [0, 5]} }
+            {name: "offset", options: { offset: [0, 5]} }
         ]
     });
 
@@ -48,37 +48,37 @@ export default function Select(props: PropsWithChildren<SelectProps, SelectItemP
     }, [componentRef]);
         
     useEffect(() => {
-        window.addEventListener('mousedown', handleWindowClick);
-        return () => window.removeEventListener('mousedown', handleWindowClick);
-    }, []);
+        window.addEventListener("mousedown", handleWindowClick);
+        return () => window.removeEventListener("mousedown", handleWindowClick);
+    }, [handleWindowClick]);
 
 
     return (
-        <div ref={componentRef} className={'oc_select' + cn(props.className)}>
-            <div style={props.style} className={`oc_select_value oc_input`} onClick={() => { setVisible(!visible); }} ref={setReferenceElement as any}>
+        <div ref={componentRef} className={"oc_select" + cn(props.className)}>
+            <div style={props.style} className={"oc_select_value oc_input"} onClick={() => { setVisible(!visible); }} ref={setReferenceElement as any}>
                 <input
                     type='text'
                     value={ 
                         selected.length <= 1 ?
-                            selected[0]?.label ?? (props.placeholder ?? `Select item${multi ? 's' : ''}...`) 
-                        : `${selected.length} items` 
+                            selected[0]?.label ?? (props.placeholder ?? `Select item${multi ? "s" : ""}...`) 
+                            : `${selected.length} items` 
                     }
                 />
             </div>
             { 
                 visible ? 
-                    <div ref={setPopperElement as any} {...attributes} style={popStyles.popper} className={'oc_select_list'}>
+                    <div ref={setPopperElement as any} {...attributes} style={popStyles.popper} className={"oc_select_list"}>
                         <SelectedContext.Provider value={values}>
                             {React.Children.map(props.children, (child) => 
                                 React.cloneElement(child, { onClick: (value: string | number) => props.onSelect(value)}) )}
                         </SelectedContext.Provider>
                     </div>
-                : 
+                    : 
                     <Fragment />
             }
         </div>
 
-    )
+    );
 }
 
 interface SelectItemProps {
@@ -95,8 +95,8 @@ export function SelectItem({value, label, style, onClick}: SelectItemProps) {
     return (
         <div 
             style={style}
-            className={'oc_select_item' + (values.includes(value) ? ` oc_selected` : '')}
-            onClick={() => onClick!(value)}>
+            className={"oc_select_item" + (values.includes(value) ? " oc_selected" : "")}
+            onClick={() => onClick(value)}>
             {label}
         </div>
     );

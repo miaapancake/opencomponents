@@ -1,7 +1,7 @@
 import { cn, InputProps } from "./helpers";
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback } from "react";
 
-import './styles/Input.scss';
+import "./styles/Input.scss";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
 export interface TextAreaProps extends InputProps<string> {
@@ -14,21 +14,21 @@ export default function TextArea(props: TextAreaProps) {
 
         if(props.maxLength && value.length > props.maxLength) return;
 
-        props.onChange(value)
+        props.onChange(value);
     }, [props]);
 
     let color = undefined;
 
     if(props.maxLength) {
         const percentageOfMax = (props.value.length)/props.maxLength;
-        if(percentageOfMax >= .9) color = '#eb4d4b'; 
-        else if(percentageOfMax >= .8) color = '#f9ca24';
+        if(percentageOfMax >= .9) color = "#eb4d4b"; 
+        else if(percentageOfMax >= .8) color = "#f9ca24";
         else color = undefined;
     }
 
     return (
         <div 
-            className={'oc_text_input oc_text_area oc_input' + (props.maxLength ? ' oc_limited' : '') + cn(props.className)}
+            className={"oc_text_input oc_text_area oc_input" + (props.maxLength ? " oc_limited" : "") + cn(props.className)}
             style={{...props.style }}
         >
             <ReactTextareaAutosize 
@@ -42,7 +42,7 @@ export default function TextArea(props: TextAreaProps) {
                     <div style={{backgroundColor: color}} className="oc_area_counter">
                         {(props.maxLength-props.value.length)}
                     </div>
-                :
+                    :
                     <Fragment />
             }
         </div>

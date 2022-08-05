@@ -1,6 +1,6 @@
-import React, { PropsWithChildren, useMemo } from 'react';
+import React, { PropsWithChildren, useMemo } from "react";
 import { AccordionId } from "./contexts/AccordionContext";
-import AccordionItemContext, { AccordionItemContextValue } from './contexts/AccordionItemContext';
+import AccordionItemContext, { AccordionItemContextValue } from "./contexts/AccordionItemContext";
 
 
 interface AccordionItemProps {

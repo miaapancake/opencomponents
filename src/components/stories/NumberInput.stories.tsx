@@ -1,12 +1,12 @@
-import NumberInput, { NumberInputProps } from '../NumberInput';
-import React, { useState } from 'react';
-import { useEffect } from '@storybook/addons';
-import './styles/global.scss';
+import NumberInput, { NumberInputProps } from "../NumberInput";
+import React, { useState } from "react";
+import { useEffect } from "@storybook/addons";
+import "./styles/global.scss";
 
 export default {
     title: "Number Input",
     component: NumberInput
-}
+};
 
 
 const Template = (args: NumberInputProps) => {
@@ -25,11 +25,11 @@ const Template = (args: NumberInputProps) => {
         onChange={setValue}
         stepSize={args.stepSize ? +args.stepSize : undefined}
     />);
-}
+};
 
 export const Normal = Template.bind({});
 
 Normal.args = {
     value: 5,
-    style: {maxWidth: '150px'}
+    style: {maxWidth: "150px"}
 };

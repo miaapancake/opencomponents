@@ -1,10 +1,10 @@
 import { cn, InputProps } from "./helpers";
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import './styles/Input.scss';
+import "./styles/Input.scss";
 
 export interface TextInputProps extends InputProps<string> {
-    type?: 'text' | 'email' | 'password';
+    type?: "text" | "email" | "password";
     maxLength?: number;
 }
 
@@ -14,14 +14,14 @@ export default function TextInput(props: TextInputProps) {
 
         if(props.maxLength && value.length > props.maxLength) return;
 
-        props.onChange(value)
+        props.onChange(value);
     }, [props]);
 
     return (
-        <div style={props.style} className={'oc_text_input oc_input' + cn(props.className)}>
+        <div style={props.style} className={"oc_text_input oc_input" + cn(props.className)}>
             <input 
                 name={props.name}
-                type={props.type ?? 'text'}
+                type={props.type ?? "text"}
                 maxLength={props.maxLength}
                 onChange={(e) => onChange(e.target.value)}
                 value={props.value}

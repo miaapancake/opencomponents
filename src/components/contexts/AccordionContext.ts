@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export type AccordionId = string|number;
 
@@ -10,6 +10,6 @@ export interface AccordionContextValue {
 
 
 const context = React.createContext<AccordionContextValue>({});
-context.displayName = 'AccordionContext';
+context.displayName = "AccordionContext";
 
 export default context;

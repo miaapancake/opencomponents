@@ -1,6 +1,6 @@
-import React, { CSSProperties, useContext, useMemo } from 'react';
-import AccordionContext from './contexts/AccordionContext';
-import AccordionItemContext from './contexts/AccordionItemContext';
+import React, { CSSProperties, useContext, useMemo } from "react";
+import AccordionContext from "./contexts/AccordionContext";
+import AccordionItemContext from "./contexts/AccordionItemContext";
 import { PropsWithChildren, valueIn, toggleOrSetValue } from "./helpers";
 
 interface AccordionHeaderProps {
@@ -16,6 +16,6 @@ export default function AccordionHeader(props: PropsWithChildren<AccordionHeader
     
     return (
         <div {...props} onClick={() => onSelect(toggleOrSetValue(id, selected))} className={"oc_accordion_item_header" + (isSelected ? " oc_selected" : "") } />
-    )
+    );
 
 }

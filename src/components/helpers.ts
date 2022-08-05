@@ -22,7 +22,7 @@ export interface ComponentBase {
  */
 export const toggleOrSetValue = (current: string | number, value: string | number | (string | number)[]) => {
     
-    let val = Array.isArray(value) ? [...value] : value;
+    const val = Array.isArray(value) ? [...value] : value;
     
     if(Array.isArray(val) && val.includes(current)) {
         return val.filter(x => x != current);
@@ -34,7 +34,7 @@ export const toggleOrSetValue = (current: string | number, value: string | numbe
         return current;
     }
 
-}
+};
 
 
 /**
@@ -48,7 +48,7 @@ export const toggleOrSetValue = (current: string | number, value: string | numbe
  */
 export const valueIn = (current: string | number, value: string | number | (string | number)[]) => {
     return Array.isArray(value) ? value.includes(current) : value === current;
-}
+};
 
 /**
  * Clamps a value between to values
@@ -61,7 +61,7 @@ export const valueIn = (current: string | number, value: string | number | (stri
  */
 export const clamp = (value: number, min: number, max: number): number => Math.max(Math.min(value, max), min);
 
-export const cn = (className: string | undefined) => className ? ` ${className}` : '';
+export const cn = (className: string | undefined) => className ? ` ${className}` : "";
 
 /**
  * Filters classnames based on if they're truthy and excludes any classnames that are falsy
@@ -69,7 +69,7 @@ export const cn = (className: string | undefined) => className ? ` ${className}`
  * @param classNames The list of css classnames to filter
  * @returns the filered string of css classnames
  */
-export const classNames = (...classNames: (string | undefined | boolean )[]) => classNames.filter(x => x).join(' ');
+export const classNames = (...classNames: (string | undefined | boolean )[]) => classNames.filter(x => x).join(" ");
 
 /**
  * Modified version of the built-in React `PropsWithChildren` interface that supports defining prop types for those children
