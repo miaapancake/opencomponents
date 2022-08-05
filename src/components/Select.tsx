@@ -1,37 +1,36 @@
-import { createContext, CSSProperties, Fragment, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { usePopper } from "react-popper";
 import React from "react";
-import { cn, ComponentBase, PropsWithChildren } from "./helpers";
-
-import "./styles/Select.scss";
-import "./styles/Input.scss";
-
+import { classNames, ComponentBase, PropsWithChildren } from "./helpers";
+import SelectItem, { SelectItemProps } from "./SelectItem";
+import SelectContext, { SelectValue } from "./contexts/SelectContext";
+import useSelect from "./hooks/useSelect";
 export interface SelectProps extends ComponentBase {
-    value?: string | number | (string | number)[];
-    onSelect: (value: string | number) => void;
+    selected?: string | number | (string | number)[];
+    onSelect: (value: SelectValue | SelectValue[]) => void;
     placeholder?: string;
 }
 
-const SelectedContext = createContext<(string | number)[]>([]);
 
-export default function Select(props: PropsWithChildren<SelectProps, SelectItemProps>) {
-
-    const items = React.Children.map(props.children, (child) => {
-        return child.props;
-    });
+function Select({style, className, placeholder, ...props}: PropsWithChildren<SelectProps, SelectItemProps>) {
     
-    const componentRef = useRef<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] = useState<any>(null);
     const [popperElement, setPopperElement] = useState<any>(null);
-    const [visible, setVisible] = useState<boolean>(false);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const multi = Array.isArray(props.value);
-    
-    // Normalize Value Variable To Array 
-    const values: (string | number)[] = Array.isArray(props.value) ? props.value : props.value ? [props.value] : [];
+    const {
+        setVisible,
+        setActiveQueryItem,
+        activeQueryItem,
+        visible,
+        contextValue,
+        componentRef,
+        onKeyDown,
+        onChange,
+        displayValue,
+        queryItems,
 
-    // Filter items to only the one's selected by values
-    const selected = items.filter(x => values.includes(x.value));
+    } = useSelect(props);
 
     // Initialize PopperJS with a 5px vertical offset 
     const { attributes, styles: popStyles } = usePopper(referenceElement, popperElement, {
@@ -40,65 +39,42 @@ export default function Select(props: PropsWithChildren<SelectProps, SelectItemP
         ]
     });
 
-    // Handle closing the dropdown when clicking outside the dropdown
-
-    const handleWindowClick = useCallback((e: MouseEvent) => {
-        if (componentRef?.current && !componentRef.current.contains(e.target as any))
-            setVisible(false);
-    }, [componentRef]);
-        
-    useEffect(() => {
-        window.addEventListener("mousedown", handleWindowClick);
-        return () => window.removeEventListener("mousedown", handleWindowClick);
-    }, [handleWindowClick]);
-
-
     return (
-        <div ref={componentRef} className={"oc-select" + cn(props.className)}>
-            <div style={props.style} className={"oc-select-value oc-input"} onClick={() => { setVisible(!visible); }} ref={setReferenceElement as any}>
+        <div ref={componentRef} className={classNames("oc-select", visible && "oc-active", className)}>
+            <div style={style} className={classNames("oc-select-value", "oc-input")} ref={setReferenceElement as any}>
                 <input
                     type='text'
-                    value={ 
-                        selected.length <= 1 ?
-                            selected[0]?.label ?? (props.placeholder ?? `Select item${multi ? "s" : ""}...`) 
-                            : `${selected.length} items` 
-                    }
+                    ref={inputRef}
+                    value={displayValue}
+                    onChange={onChange}
+                    onBlur={() => setActiveQueryItem(undefined)}
+                    onFocus={() => setVisible(true) }
+                    onKeyDown={onKeyDown}
+                    placeholder={placeholder ?? "Select..."}
                 />
             </div>
-            { 
-                visible ? 
-                    <div ref={setPopperElement as any} {...attributes} style={popStyles.popper} className={"oc-select-list"}>
-                        <SelectedContext.Provider value={values}>
-                            {React.Children.map(props.children, (child) => 
-                                React.cloneElement(child, { onClick: (value: string | number) => props.onSelect(value)}) )}
-                        </SelectedContext.Provider>
-                    </div>
-                    : 
-                    <Fragment />
-            }
+            <SelectContext.Provider value={contextValue}>
+                {
+                    visible ?
+                        <div ref={setPopperElement as any} onClick={() => inputRef.current.focus() } {...attributes} style={popStyles.popper} className={"oc-select-list"}>
+                            {queryItems.map((item, i) => (
+                                <SelectItem
+                                    key={item.value}
+                                    style={{backgroundColor: i === activeQueryItem ? "var(--color-active)" : undefined}} 
+                                    label={item.label} 
+                                    value={item.value}
+                                />
+                            ))}
+                        </div>
+                        : 
+                        <Fragment />
+                }
+            </SelectContext.Provider>
         </div>
 
     );
 }
 
-interface SelectItemProps {
-    value: string | number;
-    label: string;
-    style?: CSSProperties;
-    onClick?: (value: string | number) => void;
-}
-
-export function SelectItem({value, label, style, onClick}: SelectItemProps) {
-
-    const values = useContext(SelectedContext);
-
-    return (
-        <div 
-            style={style}
-            className={"oc-select-item" + (values.includes(value) ? " oc-selected" : "")}
-            onClick={() => onClick(value)}>
-            {label}
-        </div>
-    );
-
-}
+export default Object.assign(Select, {
+    Item: SelectItem
+});
