@@ -54,8 +54,8 @@ export default function NumberInput({onChange, value, ...props}: NumberInputProp
     }, [increment, stepSize]);
 
     return (
-        <div style={props.style} className={"oc_number_input oc_input" + cn(props.className)}>
-            <div className='oc_button oc_btn_minus' onClick={() => increment(-stepSize)}>-</div>
+        <div style={props.style} className={"oc-number-input oc-input" + cn(props.className)}>
+            <div className='oc-number-button oc-btn-minus' onClick={() => increment(-stepSize)}>-</div>
             <input
                 name={props.name}
                 type={"string"}
@@ -63,7 +63,7 @@ export default function NumberInput({onChange, value, ...props}: NumberInputProp
                 onChange={(e) => changeValue(e.currentTarget.value)}
                 value={innervalue}
             />
-            <div className='oc_button oc_btn_plus' onClick={() => increment(stepSize)}>+</div>
+            <div className='oc-number-button oc-btn-plus' onClick={() => increment(stepSize)}>+</div>
         </div>
     );
 }

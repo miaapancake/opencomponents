@@ -15,7 +15,7 @@ export default function AccordionHeader(props: PropsWithChildren<AccordionHeader
     const isSelected = useMemo(() => valueIn(id, selected), [selected, id]);
     
     return (
-        <div {...props} onClick={() => onSelect(toggleOrSetValue(id, selected))} className={"oc_accordion_item_header" + (isSelected ? " oc_selected" : "") } />
+        <div {...props} onClick={() => onSelect(toggleOrSetValue(id, selected))} className={"oc-accordion-item-header" + (isSelected ? " oc-selected" : "") } />
     );
 
 }

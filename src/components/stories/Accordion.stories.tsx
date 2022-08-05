@@ -26,10 +26,10 @@ const Template = (args: any) => {
                 items.map(item => (
                     <Accordion.Item key={item.id} id={item.id}>
                         <Accordion.Header>
-                            <div className='accordion_header'>{item.name}</div>
+                            <div className='accordion-header'>{item.name}</div>
                         </Accordion.Header>
                         <Accordion.Body>
-                            <div className='accordion_body'>{item.name} {item.name.endsWith("s") ? "are" : "is"} {item.status}</div>
+                            <div className='accordion-body'>{item.name} {item.name.endsWith("s") ? "are" : "is"} {item.status}</div>
                         </Accordion.Body>
                     </Accordion.Item>
                 ))

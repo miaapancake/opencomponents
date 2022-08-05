@@ -1,86 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
+@import "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap";
 
-.oc_input {
+.oc-input {
     position: relative;
     display: inline-block;
     margin: 10px auto;
     width: 100%;
-
     border-radius: 5px;
-
     background-color: #fff;
     border: 1px solid #eaeaea;
-
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
     font-size: 1.2em;
 
+    &:focus-within {
+        box-shadow: 0 0 3pt 2pt #74b9ff;
+    }
+
+    input,
+    textarea {
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: inherit;
+        resize: none;
+        box-sizing: border-box;
+    }
 }
 
-.oc_input:focus-within {
-    box-shadow: 0 0 3pt 2pt #74b9ff;
-}
-
-.oc_input input, .oc_input textarea {
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    border: none;
-    outline: none;
-    background-color: transparent;
-
-    color: inherit;
-    resize: none;
-    box-sizing: border-box;
-}
-
-.oc_text_input input, .oc_number_input input, .oc_input textarea {
+.oc-text-input input,
+.oc-number-input input,
+.oc-input textarea {
     width: 100%;
     padding: 10px;
 }
 
-.oc_number_input {
+.oc-number-input {
     display: inline-flex;
     align-items: center;
     justify-items: center;
+
+    input {
+        appearance: textfield;
+        width: calc(100% - 80px);
+        text-align: center;
+    }
+
+    .oc-number-button {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background: none;
+        user-select: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5em;
+        vertical-align: middle;
+    }
 }
 
-.oc_number_input input {
-  -moz-appearance: textfield;
-  width: calc(100% - 80px);
-  text-align: center;
-}
+.oc-text-area {
+    .oc-area-counter {
+        position: absolute;
+        bottom: 7.5px;
+        right: 15px;
+        min-width: 30px;
+        text-align: center;
+        font-size: 1.1em;
+        color: #fff;
+        padding: 2.5px;
+        border-radius: 5px;
+    }
 
-.oc_number_input .oc_button {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    background: none;
-    user-select: none;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5em;
-    vertical-align: middle;
-}
-
-.oc_text_area.oc_limited textarea {
-    margin-bottom: 35px;
-    line-height: 24px;
-    overflow-y: auto;
-}
-
-
-.oc_text_area .oc_area_counter {
-    position: absolute;
-    bottom: 7.5px;
-    right: 15px;
-    min-width: 30px;
-    text-align: center;
-    font-size: 1.1em;
-    color: #fff;
-    padding: 2.5px;
-    border-radius: 5px;
-
+    &.oc-limited textarea {
+        margin-bottom: 35px;
+        line-height: 24px;
+        overflow-y: auto;
+    }
 }

@@ -14,7 +14,7 @@ export default function AccordionItem(props: PropsWithChildren<AccordionItemProp
     }), [props.id]);
 
     return (
-        <div key={props.id} className="oc_accordion_item">
+        <div key={props.id} className="oc-accordion-item">
             <AccordionItemContext.Provider value={contextValue}>
                 {props.children}
             </AccordionItemContext.Provider>

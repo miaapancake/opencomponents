@@ -15,7 +15,7 @@ export default function AccordionBody(props: PropsWithChildren<AccordionBodyProp
     const isSelected = useMemo(() => valueIn(id, selected), [selected, id]);
     
     return (
-        <div className={classNames("oc_accordion_item_body", isSelected && "oc_selected")}  {...props} />
+        <div className={classNames("oc-accordion-item-body", isSelected && "oc-selected")}  {...props} />
     );
 
 }

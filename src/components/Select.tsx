@@ -54,8 +54,8 @@ export default function Select(props: PropsWithChildren<SelectProps, SelectItemP
 
 
     return (
-        <div ref={componentRef} className={"oc_select" + cn(props.className)}>
-            <div style={props.style} className={"oc_select_value oc_input"} onClick={() => { setVisible(!visible); }} ref={setReferenceElement as any}>
+        <div ref={componentRef} className={"oc-select" + cn(props.className)}>
+            <div style={props.style} className={"oc-select-value oc-input"} onClick={() => { setVisible(!visible); }} ref={setReferenceElement as any}>
                 <input
                     type='text'
                     value={ 
@@ -67,7 +67,7 @@ export default function Select(props: PropsWithChildren<SelectProps, SelectItemP
             </div>
             { 
                 visible ? 
-                    <div ref={setPopperElement as any} {...attributes} style={popStyles.popper} className={"oc_select_list"}>
+                    <div ref={setPopperElement as any} {...attributes} style={popStyles.popper} className={"oc-select-list"}>
                         <SelectedContext.Provider value={values}>
                             {React.Children.map(props.children, (child) => 
                                 React.cloneElement(child, { onClick: (value: string | number) => props.onSelect(value)}) )}
@@ -95,7 +95,7 @@ export function SelectItem({value, label, style, onClick}: SelectItemProps) {
     return (
         <div 
             style={style}
-            className={"oc_select_item" + (values.includes(value) ? " oc_selected" : "")}
+            className={"oc-select-item" + (values.includes(value) ? " oc-selected" : "")}
             onClick={() => onClick(value)}>
             {label}
         </div>

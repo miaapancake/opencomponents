@@ -28,7 +28,7 @@ export default function TextArea(props: TextAreaProps) {
 
     return (
         <div 
-            className={"oc_text_input oc_text_area oc_input" + (props.maxLength ? " oc_limited" : "") + cn(props.className)}
+            className={"oc-text-input oc-text-area oc-input" + (props.maxLength ? " oc-limited" : "") + cn(props.className)}
             style={{...props.style }}
         >
             <ReactTextareaAutosize 
@@ -39,7 +39,7 @@ export default function TextArea(props: TextAreaProps) {
             />
             {
                 props.maxLength && props.value.length ?
-                    <div style={{backgroundColor: color}} className="oc_area_counter">
+                    <div style={{backgroundColor: color}} className="oc-area-counter">
                         {(props.maxLength-props.value.length)}
                     </div>
                     :

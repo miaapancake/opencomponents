@@ -18,7 +18,7 @@ export default function TextInput(props: TextInputProps) {
     }, [props]);
 
     return (
-        <div style={props.style} className={"oc_text_input oc_input" + cn(props.className)}>
+        <div style={props.style} className={"oc-text-input oc-input" + cn(props.className)}>
             <input 
                 name={props.name}
                 type={props.type ?? "text"}

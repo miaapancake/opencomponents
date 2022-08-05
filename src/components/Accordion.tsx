@@ -36,7 +36,7 @@ function Accordion(props: PropsWithChildren<AccordionProps>) {
     );
 
     return (
-        <div className="oc_accordion" style={props.style}>
+        <div className="oc-accordion" style={props.style}>
             <AccordionContext.Provider value={contextValue}>
                 {props.children}
             </AccordionContext.Provider>

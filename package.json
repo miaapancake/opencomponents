@@ -13,8 +13,8 @@
     "build-types": "yarn tsc -d --emitDeclarationOnly --outDir types",
     "storybook": "start-storybook --debug-webpack -p 6006",
     "build-storybook": "build-storybook",
-    "lint": "eslint src",
-    "format": "eslint --fix src"
+    "lint": "eslint src && stylelint \"**/*.scss\"",
+    "format": "eslint --fix src && stylelint --fix \"**/*.scss\""
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.5.9",
@@ -42,6 +42,9 @@
     "sass": "^1.54.0",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
+    "stylelint": "^14.9.1",
+    "stylelint-config-standard-scss": "^5.0.0",
+    "stylelint-scss": "^4.3.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "tslib": "^2.4.0",
