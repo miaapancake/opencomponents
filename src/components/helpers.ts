@@ -36,6 +36,36 @@ export const toggleOrSetValue = (current: string | number, value: string | numbe
 
 };
 
+/**
+ * Determines wether a state value is an array or single value and sets/adds 
+ * the given value appropriately.
+ * 
+ * @param current - The value to add or set the state value to
+ * @param value - The current state value
+ * 
+ * @returns The new modified state
+ */
+export const addOrSetValue = (current: string | number, value: string | number | (string | number)[]) => {
+    
+    const val = Array.isArray(value) ? [...value] : value;
+    
+    if(Array.isArray(val) && !val.includes(current)) {
+        return [...val,current];
+    }else if(val === current) {
+        return undefined;
+    }else {
+        return current;
+    }
+
+};
+
+/**
+ * Version of modulo that actually properly handles negative values
+ * @param n
+ * @param max 
+ * @returns 
+ */
+export const modulo = (n: number, max: number) => (n + max) % max;
 
 /**
  * Determines wether a value is an array or single value and appropiately checks
@@ -61,6 +91,9 @@ export const valueIn = (current: string | number, value: string | number | (stri
  */
 export const clamp = (value: number, min: number, max: number): number => Math.max(Math.min(value, max), min);
 
+/**
+ * @deprecated use classNames instead
+ */
 export const cn = (className: string | undefined) => className ? ` ${className}` : "";
 
 /**

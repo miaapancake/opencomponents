@@ -47,6 +47,9 @@ module.exports = {
         ],
         "@typescript-eslint/no-explicit-any": [
             "off"
+        ],
+        "eol-last": [
+            "error"
         ]
     }
 };
