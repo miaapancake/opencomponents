@@ -1,6 +1,6 @@
 {
-  "name": "opencomponents",
-  "version": "0.0.1",
+  "name": "@openthingies/components",
+  "version": "0.0.2-0",
   "description": "Component Library For OpenThingies",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
@@ -8,6 +8,7 @@
   "repository": "https://github.com/OpenThingies/OpenComponents",
   "author": "The OpenThingies Team",
   "license": "MIT",
+  "private": false,
   "scripts": {
     "build": "tsup && node ./tools/compilesass.js src/components/styles lib/style.css",
     "build-types": "yarn tsc -d --emitDeclarationOnly --outDir types",
@@ -60,6 +61,5 @@
     "react-popper": "^2.3.0",
     "react-textarea-autosize": "^8.3.4",
     "uncontrollable": "^7.2.1"
-  },
-  "packageManager": "yarn@3.2.1"
+  }
 }

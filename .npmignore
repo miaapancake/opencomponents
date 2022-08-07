@@ -3,5 +3,8 @@ src
 tools
 .gitignore
 tsconfig.json
-tsup.config.json
+tsup.config.js
 node_modules
+.eslintrc.js
+.eslintignore
+.stylelintrc.json
