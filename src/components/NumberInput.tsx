@@ -1,5 +1,6 @@
-import { clamp, cn, InputProps } from "./helpers";
 import React, { useCallback, useEffect, useState } from "react";
+
+import { clamp, cn, InputProps } from "./helpers";
 
 export interface NumberInputProps extends InputProps<number> {
     min?: number;

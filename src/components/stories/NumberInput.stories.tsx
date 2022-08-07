@@ -1,6 +1,7 @@
-import NumberInput, { NumberInputProps } from "../NumberInput";
-import React, { useState } from "react";
 import { useEffect } from "@storybook/addons";
+import React, { useState } from "react";
+
+import NumberInput, { NumberInputProps } from "../NumberInput";
 import "./styles/global.scss";
 
 export default {

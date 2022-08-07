@@ -1,5 +1,6 @@
-import TextInput, { TextInputProps } from "../TextInput";
 import React, { useEffect, useState } from "react";
+
+import TextInput, { TextInputProps } from "../TextInput";
 import "./styles/global.scss";
 
 export default {

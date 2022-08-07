@@ -1,10 +1,10 @@
-import { Fragment, useRef, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import { usePopper } from "react-popper";
-import React from "react";
-import { classNames, ComponentBase, PropsWithChildren } from "./helpers";
-import SelectItem, { SelectItemProps } from "./SelectItem";
+
 import SelectContext, { SelectValue } from "./contexts/SelectContext";
+import { classNames, ComponentBase, PropsWithChildren } from "./helpers";
 import useSelect from "./hooks/useSelect";
+import SelectItem, { SelectItemProps } from "./SelectItem";
 export interface SelectProps extends ComponentBase {
     selected?: string | number | (string | number)[];
     onSelect: (value: SelectValue | SelectValue[]) => void;

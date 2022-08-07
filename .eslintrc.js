@@ -13,7 +13,9 @@ module.exports = {
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:react-hooks/recommended"
+        "plugin:react-hooks/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -50,6 +52,25 @@ module.exports = {
         ],
         "eol-last": [
             "error"
+        ],
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "parent",
+                    "sibling",
+                    "index",
+                    "object",
+                    "type"
+                ],
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": 'asc',
+                    "caseInsensitive": true
+                }
+            }
         ]
     }
 };

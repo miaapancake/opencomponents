@@ -1,10 +1,10 @@
 import React, { CSSProperties, useMemo } from "react";
 import { useUncontrolled } from "uncontrollable";
+
 import AccordionBody from "./AccordionBody";
 import AccordionHeader from "./AccordionHeader";
 import AccordionItem from "./AccordionItem";
-import AccordionContext from "./contexts/AccordionContext";
-import { AccordionId } from "./contexts/AccordionContext";
+import AccordionContext, { AccordionId } from "./contexts/AccordionContext";
 import { PropsWithChildren } from "./helpers";
 
 interface AccordionProps {

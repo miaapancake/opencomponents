@@ -1,6 +1,7 @@
-import TextArea, { TextAreaProps } from "../TextArea";
-import React, { useState } from "react";
 import { useEffect } from "@storybook/addons";
+import React, { useState } from "react";
+
+import TextArea, { TextAreaProps } from "../TextArea";
 import "./styles/global.scss";
 
 export default {

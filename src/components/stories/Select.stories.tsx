@@ -1,7 +1,8 @@
-import Select from "../Select";
 import React, { useState } from "react";
-import SelectItem from "../SelectItem";
+
 import { SelectValue } from "../contexts/SelectContext";
+import Select from "../Select";
+import SelectItem from "../SelectItem";
 
 import "../styles/Globals.scss";
 import "./styles/global.scss";

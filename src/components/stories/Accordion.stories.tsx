@@ -1,8 +1,11 @@
-import Accordion from "../Accordion";
+
+import {loremIpsum} from "lorem-ipsum";
 import React from "react";
+
+import Accordion from "../Accordion";
+
 import "../styles/Accordion.scss";
 import "./styles/global.scss";
-import {loremIpsum} from "lorem-ipsum";
 
 export default {
     title: "Accordion",

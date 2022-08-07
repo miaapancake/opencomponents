@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { CSSProperties } from "react";
+import React, { useContext , CSSProperties } from "react";
+
 import SelectContext from "./contexts/SelectContext";
 import { classNames, toggleOrSetValue, valueIn } from "./helpers";
 

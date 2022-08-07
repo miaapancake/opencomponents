@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useMemo, useEffect, useCallback, useRef } from "react";
+import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
+
 import { SelectContextValue } from "../contexts/SelectContext";
 import { modulo, PropsWithChildren, toggleOrSetValue, valueIn } from "../helpers";
 import { SelectProps } from "../Select";

@@ -1,5 +1,6 @@
-import { cn, InputProps } from "./helpers";
 import React, { useCallback } from "react";
+
+import { cn, InputProps } from "./helpers";
 
 import "./styles/Input.scss";
 

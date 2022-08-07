@@ -1,8 +1,9 @@
-import { cn, InputProps } from "./helpers";
 import React, { Fragment, useCallback } from "react";
+import ReactTextareaAutosize from "react-textarea-autosize";
+
+import { cn, InputProps } from "./helpers";
 
 import "./styles/Input.scss";
-import ReactTextareaAutosize from "react-textarea-autosize";
 
 export interface TextAreaProps extends InputProps<string> {
     maxLength?: number;
