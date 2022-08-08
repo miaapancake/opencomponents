@@ -1,0 +1,79 @@
+version: 2.1
+jobs:
+  install_deps:
+    docker:
+      - image: node:16
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys: 
+            - yarn-packages-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install dependencies
+          command: yarn install
+
+      - save_cache:
+          name: Caching dependencies
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+  lint:
+    docker:
+      - image: node:16
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys: 
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: ESLint
+          command: yarn lint-source
+      - run:
+          name: StyleLint
+          command: yarn lint-css
+
+  build:
+    docker:
+      - image: node:16
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys: 
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Build Source files
+          command: yarn build-source
+      - run:
+          name: Build CSS files
+          command: yarn build-css
+      - save_cache:
+          name: Caching built code
+          key: build-{{ checksum "src" }}
+          paths:
+            - lib
+
+
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - install_deps
+      - lint:
+          requires:
+            - install_deps
+      
+      - build:
+          requires:
+            - install_deps
+      # - unit_test:
+      #     requires:
+      #       - install_deps
+      # - integration_test
+      #     requires:
+      #       - install_deps

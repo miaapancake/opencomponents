@@ -11,10 +11,13 @@
   "private": false,
   "scripts": {
     "build": "tsup && node ./tools/compilesass.js src/components/styles lib/style.css",
-    "build-types": "yarn tsc -d --emitDeclarationOnly --outDir types",
+    "build-source": "tsup",
+    "build-css" : "node ./tools/compilesass.js src/components/styles lib/style.css",
     "storybook": "start-storybook --debug-webpack -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint src && stylelint \"**/*.scss\"",
+    "lint-source": "eslint src",
+    "lint-css": "stylelint \"**/*.scss\"",
     "format": "eslint --fix src && stylelint --fix \"**/*.scss\""
   },
   "devDependencies": {
