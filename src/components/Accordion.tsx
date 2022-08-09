@@ -17,13 +17,12 @@ interface AccordionProps {
 
 //Hi Jotti
 function Accordion(props: PropsWithChildren<AccordionProps>) {
-    
     const {
         selected = props.defaultSelected,
         onSelect,
-        alwaysOpen
+        alwaysOpen,
     } = useUncontrolled(props, {
-        selected: "onSelect"
+        selected: "onSelect",
     });
 
     const contextValue = useMemo(
@@ -42,13 +41,10 @@ function Accordion(props: PropsWithChildren<AccordionProps>) {
             </AccordionContext.Provider>
         </div>
     );
-
 }
 
-export default Object.assign(Accordion,
-    {
-        Item: AccordionItem,
-        Body: AccordionBody,
-        Header: AccordionHeader
-    }   
-);
+export default Object.assign(Accordion, {
+    Item: AccordionItem,
+    Body: AccordionBody,
+    Header: AccordionHeader,
+});

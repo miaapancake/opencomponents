@@ -1,7 +1,6 @@
 import { createContext } from "react";
 
-
-export type SelectValue = string|number;
+export type SelectValue = string | number;
 
 export interface SelectContextValue {
     selected?: SelectValue | SelectValue[];

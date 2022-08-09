@@ -8,3 +8,5 @@ node_modules
 .eslintrc.js
 .eslintignore
 .stylelintrc.json
+yarn-error.log
+.vscode

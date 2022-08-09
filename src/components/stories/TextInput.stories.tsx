@@ -5,9 +5,8 @@ import "./styles/global.scss";
 
 export default {
     title: "Text Input",
-    component: TextInput
+    component: TextInput,
 };
-
 
 const Template = (args: TextInputProps) => {
     const [text, setText] = useState(args.value);
@@ -16,13 +15,15 @@ const Template = (args: TextInputProps) => {
         setText(args.value);
     }, [args.value]);
 
-    return (<TextInput
-        style={args.style}
-        value={text}
-        maxLength={args.maxLength}
-        onChange={setText}
-        type={args.type}
-    />);
+    return (
+        <TextInput
+            style={args.style}
+            value={text}
+            maxLength={args.maxLength}
+            onChange={setText}
+            type={args.type}
+        />
+    );
 };
 
 export const Normal = Template.bind({});
@@ -30,6 +31,6 @@ export const Normal = Template.bind({});
 Normal.args = {
     value: "Some String",
     style: {
-        maxWidth: "300px"
-    }
+        maxWidth: "300px",
+    },
 };

@@ -3,7 +3,7 @@ import React from "react";
 import { AccordionId } from "./AccordionContext";
 
 export interface AccordionItemContextValue {
-  id?: AccordionId;
+    id?: AccordionId;
 }
 
 const context = React.createContext<AccordionItemContextValue>({});

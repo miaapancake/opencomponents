@@ -15,7 +15,8 @@ module.exports = {
         "plugin:@typescript-eslint/recommended",
         "plugin:react-hooks/recommended",
         "plugin:import/recommended",
-        "plugin:import/typescript"
+        "plugin:import/typescript",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -28,12 +29,13 @@ module.exports = {
     "plugins": [
         "react",
         "@typescript-eslint",
-        "react-hooks"
+        "react-hooks",
+        "prettier"
     ],
     "rules": {
-        "indent": [
+        "max-len": [
             "error",
-            4
+            { "code": 100 }
         ],
         "linebreak-style": [
             "error",
@@ -70,6 +72,13 @@ module.exports = {
                     "order": 'asc',
                     "caseInsensitive": true
                 }
+            }
+        ],
+        "prettier/prettier": [
+            "error",
+            {
+                "tabWidth": 4,
+                "printWidth": 100
             }
         ]
     }

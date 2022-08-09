@@ -9,14 +9,15 @@ interface AccordionBodyProps {
 }
 
 export default function AccordionBody(props: PropsWithChildren<AccordionBodyProps, any>) {
-    
-    const {selected} = useContext(AccordionContext);
-    const {id} = useContext(AccordionItemContext);
+    const { selected } = useContext(AccordionContext);
+    const { id } = useContext(AccordionItemContext);
 
     const isSelected = useMemo(() => valueIn(id, selected), [selected, id]);
-    
-    return (
-        <div className={classNames("oc-accordion-item-body", isSelected && "oc-selected")}  {...props} />
-    );
 
+    return (
+        <div
+            className={classNames("oc-accordion-item-body", isSelected && "oc-selected")}
+            {...props}
+        />
+    );
 }

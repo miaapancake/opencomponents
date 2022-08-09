@@ -1,5 +1,6 @@
 # OpenComponents
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/OpenThingies/OpenComponents/tree/mistress.svg?style=svg&circle-token=6effba72cd3af2f9d2c14b3983df7e9e5bf2f369)](https://dl.circleci.com/status-badge/redirect/gh/OpenThingies/OpenMoodServer/tree/mistress)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/OpenThingies/OpenComponents/tree/mistress.svg?style=svg&circle-token=fc329225db45cc5e71d28a0a5b81c4a437cab1f7)](https://dl.circleci.com/status-badge/redirect/gh/OpenThingies/OpenComponents/tree/mistress)
+
 A React component library made by the OpenThingies team.
 The library is mainly used by projects from the OpenThingies team.
 

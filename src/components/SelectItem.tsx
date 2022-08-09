@@ -1,4 +1,4 @@
-import React, { useContext , CSSProperties } from "react";
+import React, { useContext, CSSProperties } from "react";
 
 import SelectContext from "./contexts/SelectContext";
 import { classNames, toggleOrSetValue, valueIn } from "./helpers";
@@ -9,20 +9,19 @@ export interface SelectItemProps {
     style?: CSSProperties;
 }
 
-export default function SelectItem({value, label, style}: SelectItemProps) {
-
-    const {selected, onSelect, setQuery} = useContext(SelectContext);
+export default function SelectItem({ value, label, style }: SelectItemProps) {
+    const { selected, onSelect, setQuery } = useContext(SelectContext);
 
     return (
-        <div 
+        <div
             style={style}
             className={classNames("oc-select-item", valueIn(value, selected) && "oc-selected")}
             onClick={() => {
                 onSelect(toggleOrSetValue(value, selected));
                 setQuery("");
-            }}>
+            }}
+        >
             {label}
         </div>
     );
-
 }

@@ -36,6 +36,19 @@ jobs:
           name: StyleLint
           command: yarn lint-css
 
+  test:
+    docker:
+      - image: node:16
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys: 
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Run Unit Tests
+          command: yarn test
+
   build:
     docker:
       - image: node:16
@@ -64,6 +77,9 @@ workflows:
   main:
     jobs:
       - install_deps
+      - test:
+          requires:
+            - install_deps
       - lint:
           requires:
             - install_deps
