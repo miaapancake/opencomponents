@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import { cn, InputProps } from "./helpers";
+import { classNames, InputProps } from "./helpers";
 
 import "./styles/Input.scss";
 
@@ -19,7 +19,7 @@ export default function TextInput(props: TextInputProps) {
     }, [props]);
 
     return (
-        <div style={props.style} className={"oc-text-input oc-input" + cn(props.className)}>
+        <div style={props.style} className={classNames("oc-text-input oc-input", props.className)}>
             <input 
                 name={props.name}
                 type={props.type ?? "text"}

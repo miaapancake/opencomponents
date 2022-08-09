@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
-import { cn, InputProps } from "./helpers";
+import { classNames, InputProps } from "./helpers";
 
 import "./styles/Input.scss";
 
@@ -29,7 +29,7 @@ export default function TextArea(props: TextAreaProps) {
 
     return (
         <div 
-            className={"oc-text-input oc-text-area oc-input" + (props.maxLength ? " oc-limited" : "") + cn(props.className)}
+            className={classNames("oc-text-input oc-text-area oc-input", props.maxLength && " oc-limited", props.className)}
             style={{...props.style }}
         >
             <ReactTextareaAutosize 

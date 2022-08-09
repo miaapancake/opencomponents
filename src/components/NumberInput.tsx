@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { clamp, cn, InputProps } from "./helpers";
+import { clamp, classNames, InputProps } from "./helpers";
 
 export interface NumberInputProps extends InputProps<number> {
     min?: number;
@@ -55,7 +55,7 @@ export default function NumberInput({onChange, value, ...props}: NumberInputProp
     }, [increment, stepSize]);
 
     return (
-        <div style={props.style} className={"oc-number-input oc-input" + cn(props.className)}>
+        <div style={props.style} className={classNames("oc-number-input oc-input", props.className)}>
             <div className='oc-number-button oc-btn-minus' onClick={() => increment(-stepSize)}>-</div>
             <input
                 name={props.name}

@@ -92,11 +92,6 @@ export const valueIn = (current: string | number, value: string | number | (stri
 export const clamp = (value: number, min: number, max: number): number => Math.max(Math.min(value, max), min);
 
 /**
- * @deprecated use classNames instead
- */
-export const cn = (className: string | undefined) => className ? ` ${className}` : "";
-
-/**
  * Filters classnames based on if they're truthy and excludes any classnames that are falsy
  * 
  * @param classNames The list of css classnames to filter
