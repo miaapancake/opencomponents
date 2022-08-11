@@ -75,8 +75,6 @@ export const addOrSetValue = (
         return [...val, newValue];
     } else if (Array.isArray(val)) {
         return val;
-    } else if (val === newValue) {
-        return undefined;
     } else {
         return newValue;
     }
@@ -100,6 +98,7 @@ export const modulo = (n: number, max: number) => ((n % max) + max) % max;
  *
  */
 export const valueIn = (current: string | number, value: string | number | (string | number)[]) => {
+    if (current === undefined || value === undefined) return false;
     return Array.isArray(value) ? value.includes(current) : value === current;
 };
 
@@ -130,4 +129,8 @@ export const classNames = (...classNames: (string | undefined | boolean)[]) =>
  */
 export type PropsWithChildren<PropsType, ChildPropsType = any> = PropsType & {
     children: React.ReactElement<ChildPropsType> | React.ReactElement<ChildPropsType>[];
+};
+
+export type PropsWithAnyChildren<PropsType, ChildPropsType = any> = PropsType & {
+    children: string | React.ReactElement<ChildPropsType> | React.ReactElement<ChildPropsType>[];
 };

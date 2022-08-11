@@ -7,12 +7,6 @@ describe("AddOrSetValue Function", () => {
         expect(out).toStrictEqual("new val");
     });
 
-    it("Sets an object to undefined if object is set to current value", () => {
-        const out = addOrSetValue("val", "val");
-
-        expect(out).toStrictEqual(undefined);
-    });
-
     it("Appends an array with current value", () => {
         const out = addOrSetValue("new val", ["val"]);
 

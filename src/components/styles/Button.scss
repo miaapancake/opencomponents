@@ -1,0 +1,52 @@
+.oc-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-out;
+    font-size: 1.1em;
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    &.oc-button.oc-primary {
+        background-color: var(--color-primary);
+        color: #fff;
+
+        &:hover,
+        &.oc-selected {
+            background-color: var(--color-active);
+        }
+    }
+
+    &.oc-button.oc-secondary {
+        background-color: var(--color-secondary);
+        color: #fff;
+
+        &:hover {
+            background-color: var(--color-secondary-active);
+        }
+    }
+}
+
+.oc-button-group {
+    .oc-button {
+        margin: 10px 0;
+        border-radius: 0;
+        border-right: 1px solid rgb(0 0 0 / 10%);
+
+        &:first-of-type {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        &:last-of-type {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-right: none;
+        }
+    }
+}

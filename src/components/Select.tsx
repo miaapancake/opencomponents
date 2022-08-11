@@ -13,7 +13,7 @@ export interface SelectProps extends ComponentBase {
 }
 
 function Select({
-    style,
+    style: style,
     className,
     placeholder,
     ...props
