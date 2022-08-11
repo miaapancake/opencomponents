@@ -81,6 +81,25 @@ export const addOrSetValue = (
 };
 
 /**
+ * Default comparison function for primitives
+ * @param a first value
+ * @param b second value
+ * @returns the direction to move the current item in
+ */
+export const defaultSort = <T extends string | number | boolean>(a: T, b: T) => {
+    switch (typeof a) {
+        case "string":
+            return a.localeCompare(b.toString());
+        case "number":
+            return a - (b as number);
+        case "boolean":
+            return (a ? 1 : -1) - (b ? 1 : -1);
+        default:
+            return 0;
+    }
+};
+
+/**
  * Version of modulo that actually properly handles negative values
  * @param n
  * @param max
@@ -133,4 +152,8 @@ export type PropsWithChildren<PropsType, ChildPropsType = any> = PropsType & {
 
 export type PropsWithAnyChildren<PropsType, ChildPropsType = any> = PropsType & {
     children: string | React.ReactElement<ChildPropsType> | React.ReactElement<ChildPropsType>[];
+};
+
+export type PropsWithChild<PropsType, ChildPropsType = any> = PropsType & {
+    children: React.ReactElement<ChildPropsType>;
 };

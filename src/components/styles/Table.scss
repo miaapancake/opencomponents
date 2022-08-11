@@ -1,0 +1,33 @@
+.oc-table-container {
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+
+    .oc-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        .oc-table-header {
+            border-bottom: 1px solid #eaeaea;
+
+            .oc-table-column {
+                padding: 10px;
+                text-align: left;
+                cursor: pointer;
+                user-select: none;
+            }
+        }
+
+        .oc-table-body {
+            .oc-table-row {
+                &:nth-child(odd) {
+                    background-color: #fafafa;
+                }
+
+                .oc-table-row-item {
+                    padding: 10px;
+                    text-align: left;
+                }
+            }
+        }
+    }
+}

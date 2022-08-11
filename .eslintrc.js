@@ -74,6 +74,9 @@ module.exports = {
                 }
             }
         ],
+        "no-empty-pattern": [
+            "off"
+        ],
         "prettier/prettier": [
             "error",
             {
