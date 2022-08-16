@@ -1,14 +1,7 @@
 import React, { useContext } from "react";
 
 import ButtonGroupContext, { ButtonId } from "./contexts/ButtonGroupContext";
-import {
-    addOrSetValue,
-    classNames,
-    ComponentBase,
-    PropsWithAnyChildren,
-    toggleOrSetValue,
-    valueIn,
-} from "./helpers";
+import { addOrSetValue, classNames, ComponentBase, PropsWithAnyChildren, valueIn } from "./helpers";
 
 export interface ButtonProps extends ComponentBase {
     buttonStyle?: "primary" | "secondary" | "flat";

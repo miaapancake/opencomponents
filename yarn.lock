@@ -1773,6 +1773,13 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@openthingies/hooks@^0.1.1-2":
+  version "0.1.1-2"
+  resolved "https://registry.yarnpkg.com/@openthingies/hooks/-/hooks-0.1.1-2.tgz#65c87b06c6b51965076a3433c8aa324b78b7ee12"
+  integrity sha512-OzUSSA9unrybiPvMEXg3ZK37VGXFvnT6SAiarxk3bsLJhlxNp4VE20rNcVtE7xmFfr8wPmVbouHfYNg6Y6uZgw==
+  dependencies:
+    react "^18.2.0"
+
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.7.tgz#58f8217ba70069cc6a73f5d7e05e85b458c150e2"

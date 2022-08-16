@@ -1,10 +1,11 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { usePopper } from "react-popper";
 
 import SelectContext, { SelectValue } from "./contexts/SelectContext";
 import { classNames, ComponentBase, PropsWithChildren } from "./helpers";
 import useSelect from "./hooks/useSelect";
 import SelectItem, { SelectItemProps } from "./SelectItem";
+import TextInput from "./TextInput";
 
 export interface SelectProps extends ComponentBase {
     selected?: string | number | (string | number)[];
@@ -20,25 +21,30 @@ function Select({
 }: PropsWithChildren<SelectProps, SelectItemProps>) {
     const [referenceElement, setReferenceElement] = useState<any>(null);
     const [popperElement, setPopperElement] = useState<any>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
 
     const {
         setVisible,
-        setActiveQueryItem,
         activeQueryItem,
         visible,
         contextValue,
         componentRef,
-        onKeyDown,
-        onChange,
         displayValue,
         queryItems,
+        query,
+        setQuery,
+        queryInputRef,
     } = useSelect(props);
 
     // Initialize PopperJS with a 5px vertical offset
-    const { attributes, styles: popStyles } = usePopper(referenceElement, popperElement, {
+    const {
+        attributes,
+        styles: popStyles,
+        forceUpdate,
+    } = usePopper(referenceElement, popperElement, {
         modifiers: [{ name: "offset", options: { offset: [0, 5] } }],
     });
+
+    useEffect(() => (forceUpdate ? forceUpdate() : undefined), [forceUpdate, displayValue, query]);
 
     return (
         <div
@@ -49,27 +55,25 @@ function Select({
                 style={style}
                 className={classNames("oc-select-value", "oc-input")}
                 ref={setReferenceElement as any}
+                onClick={() => setVisible(!visible)}
             >
-                <input
-                    type="text"
-                    ref={inputRef}
-                    value={displayValue}
-                    onChange={onChange}
-                    onBlur={() => setActiveQueryItem(undefined)}
-                    onFocus={() => setVisible(true)}
-                    onKeyDown={onKeyDown}
-                    placeholder={placeholder ?? "Select..."}
-                />
+                {displayValue ?? placeholder ?? "Select..."}
             </div>
             <SelectContext.Provider value={contextValue}>
                 {visible ? (
                     <div
                         ref={setPopperElement as any}
-                        onClick={() => inputRef.current.focus()}
                         style={popStyles.popper}
                         className={"oc-select-list"}
                         {...attributes}
                     >
+                        <TextInput
+                            ref={queryInputRef}
+                            className="oc-query-input"
+                            type="text"
+                            value={query}
+                            onChange={setQuery}
+                        />
                         {queryItems.map((item, i) => (
                             <SelectItem
                                 key={item.value}

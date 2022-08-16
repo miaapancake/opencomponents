@@ -20,17 +20,26 @@ const mockData = [
     { id: 3, name: "Snake", friendliness: 3 },
     { id: 4, name: "Mosquito", friendliness: 0 },
     { id: 5, name: "Parastratiosphecomyia", friendliness: 39 },
+    { id: 6, name: "some very very long name that may fuck with css", friendliness: 42 },
 ];
 
 const Template = (args) => {
     const [selected, setSelected] = useState<SelectValue | SelectValue[] | undefined>(args.default);
 
     return (
-        <Select selected={selected} onSelect={setSelected}>
-            {mockData.map((item) => (
-                <SelectItem key={item.id} label={item.name} value={item.id} />
-            ))}
-        </Select>
+        <div
+            style={{
+                margin: "10px auto",
+                minHeight: 300,
+                textAlign: "center",
+            }}
+        >
+            <Select selected={selected} onSelect={setSelected}>
+                {mockData.map((item) => (
+                    <SelectItem key={item.id} label={item.name} value={item.id} />
+                ))}
+            </Select>
+        </div>
     );
 };
 

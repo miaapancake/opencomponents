@@ -1,24 +1,25 @@
+@import "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap";
+
 .oc-select {
     display: inline-block;
-    min-width: 150px;
-    max-width: 300px;
+    width: 100%;
+    max-width: 400px;
     position: relative;
-    font-family: sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
 
     .oc-select-value {
         cursor: pointer;
         user-select: none;
         text-align: center;
-
-        input {
-            padding: 10px;
-            text-overflow: ellipsis;
-        }
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 10px;
     }
 
     &.oc-active {
         .oc-select-value {
-            box-shadow: 0 0 3pt 2pt var(--color-primary);
+            border-color: var(--color-primary);
         }
     }
 }
@@ -28,19 +29,32 @@
     border-radius: 5px;
     background-color: #fff;
     border: 1px solid #eaeaea;
-    width: max-content;
     min-width: 100%;
-    max-width: 400px;
+    width: 100%;
+    max-width: max-content;
     max-height: 500px;
     box-shadow: 1px 2px 3px rgb(0 0 0 / 10%);
     overflow-y: auto;
     overflow-x: hidden;
+
+    .oc-query-input {
+        margin: 10px;
+        width: calc(100% - 20px);
+        margin-bottom: 15px;
+
+        input {
+            padding: 5px;
+            text-align: center;
+        }
+    }
 
     .oc-select-item {
         padding: 10px;
         user-select: none;
         cursor: pointer;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 1.2em;
         width: 100%;
 

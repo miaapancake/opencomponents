@@ -12,7 +12,7 @@
     font-size: 1.2em;
 
     &:focus-within {
-        box-shadow: 0 0 3pt 2pt var(--color-primary);
+        border-color: var(--color-primary);
     }
 
     input,

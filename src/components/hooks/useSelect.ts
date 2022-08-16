@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
+import { useClickOutside, useKeyPress } from "@openthingies/hooks";
+import React, { useState, useMemo, useEffect, useCallback, createRef } from "react";
 
 import { SelectContextValue } from "../contexts/SelectContext";
 import { modulo, PropsWithChildren, toggleOrSetValue, valueIn } from "../helpers";
@@ -13,26 +14,15 @@ export default function useSelect({
     const [visible, setVisible] = useState<boolean>(false);
     const [query, setQuery] = useState<string>("");
     const [activeQueryItem, setActiveQueryItem] = useState<number | undefined>(undefined);
-    const componentRef = useRef<HTMLDivElement>(null);
+    const queryInputRef = createRef<HTMLInputElement>();
 
     const items = React.Children.map(children, (child) => child.props);
 
     // Handle closing the dropdown when clicking outside the dropdown
-
-    const handleWindowClick = useCallback(
-        (e: MouseEvent) => {
-            if (componentRef?.current && !componentRef.current.contains(e.target as any)) {
-                setVisible(false);
-                setQuery("");
-            }
-        },
-        [componentRef, setQuery, setVisible]
-    );
-
-    useEffect(() => {
-        window.addEventListener("mousedown", handleWindowClick);
-        return () => window.removeEventListener("mousedown", handleWindowClick);
-    }, [handleWindowClick]);
+    const componentRef = useClickOutside(() => {
+        setVisible(false);
+        setQuery("");
+    });
 
     // Set context value
     const contextValue = useMemo<SelectContextValue>(
@@ -51,40 +41,21 @@ export default function useSelect({
     );
 
     // Filter the item list by the current query
-    const queryItems = useMemo(() => {
-        if (query) {
-            const splitQuery = query.split(",");
-            const trimmedQuery = splitQuery[splitQuery.length - 1].trim();
-            return items.filter((x) =>
-                x.label.toLocaleLowerCase().includes(trimmedQuery.toLocaleLowerCase())
-            );
-        }
-        return items;
-    }, [query, items]);
+    const queryItems = useMemo(
+        () =>
+            query
+                ? items.filter((x) => x.label.toUpperCase().includes(query.toUpperCase()))
+                : items,
+        [query, items]
+    );
 
     // Keydown event for input
     const onKeyDown = useCallback(
         (e) => {
-            let trimmedQuery, item, newQuery, up, len;
+            if (!visible) return;
+
+            let newQuery, up, len;
             switch (e.key) {
-                case "Backspace":
-                    // Get the text after the last comma and find an item with that as the label
-                    trimmedQuery = e.target.value.split(",").at(-1).trimStart();
-                    item = items.find((x) => x.label.toLowerCase() === trimmedQuery.toLowerCase());
-
-                    // If we do remove that item from the list and
-                    // reset the current query to the new selected items
-                    if (item) {
-                        e.preventDefault();
-                        onSelect(
-                            Array.isArray(selected)
-                                ? selected.filter((x) => x !== item.value)
-                                : undefined
-                        );
-                        setQuery("");
-                    }
-                    break;
-
                 case "Enter":
                     // When pressing enter toggle or set the
                     // currently selected item in the dropdown menu
@@ -118,57 +89,32 @@ export default function useSelect({
                     break;
             }
         },
-        [activeQueryItem, items, onSelect, queryItems, selected, setActiveQueryItem, setQuery]
+        [activeQueryItem, onSelect, queryItems, selected, setActiveQueryItem, setQuery, visible]
     );
 
-    // onChange event for input
-    const onChange = useCallback(
-        (e) => {
-            const val = e.target.value;
-
-            // If it is a multiselect
-            if (Array.isArray(selected)) {
-                // Map the content of the input to item selection
-                let foundItems = val
-                    .split(",")
-                    .map((x) =>
-                        items.find((item) => item.label.toLowerCase() === x.trim().toLowerCase())
-                    );
-                foundItems = foundItems.filter((x) => x !== undefined);
-
-                onSelect(foundItems.map((x) => x.value));
-            } else {
-                // Map the content of the input to item selection
-                const foundItem = items.find(
-                    (item) =>
-                        item.label.toLowerCase() === val.split(",").at(-1).trim().toLowerCase()
-                );
-                if (foundItem) onSelect(foundItem.value);
-            }
-
-            setQuery(e.target.value);
-        },
-        [items, onSelect, selected]
-    );
+    useKeyPress(onKeyDown);
 
     // Reset the active query item if the query changes
     useEffect(() => setActiveQueryItem(undefined), [query]);
 
-    const displayValue = useMemo(() => {
-        if (query) {
-            return query;
-        }
+    useEffect(() => {
+        if (visible) queryInputRef.current?.focus();
+    }, [visible, queryInputRef]);
 
+    const displayValue = useMemo(() => {
         if (selectedItems.length > 1) {
             return selectedItems.map((x) => x.label).join(", ");
         } else if (selectedItems.length === 1) {
             return selectedItems[0].label;
         }
 
-        return "";
-    }, [query, selectedItems]);
+        return undefined;
+    }, [selectedItems]);
 
     return {
+        query,
+        setQuery,
+        queryInputRef,
         visible,
         setVisible,
         activeQueryItem,
@@ -176,7 +122,6 @@ export default function useSelect({
         contextValue,
         componentRef,
         onKeyDown,
-        onChange,
         queryItems,
         displayValue,
     };

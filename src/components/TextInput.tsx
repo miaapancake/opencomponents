@@ -9,7 +9,7 @@ export interface TextInputProps extends InputProps<string> {
     maxLength?: number;
 }
 
-export default function TextInput(props: TextInputProps) {
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
     const onChange = useCallback(
         (value) => {
             if (props.maxLength && value.length > props.maxLength) return;
@@ -22,6 +22,7 @@ export default function TextInput(props: TextInputProps) {
     return (
         <div style={props.style} className={classNames("oc-text-input oc-input", props.className)}>
             <input
+                ref={ref}
                 name={props.name}
                 type={props.type ?? "text"}
                 maxLength={props.maxLength}
@@ -30,4 +31,8 @@ export default function TextInput(props: TextInputProps) {
             />
         </div>
     );
-}
+});
+
+TextInput.displayName = "TextInput";
+
+export default TextInput;
