@@ -1,6 +1,6 @@
 {
   "name": "@openthingies/components",
-  "version": "0.0.2-0",
+  "version": "0.0.2-5",
   "description": "Component Library For OpenThingies",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
