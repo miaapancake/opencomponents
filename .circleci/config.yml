@@ -97,10 +97,20 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - verify:
+          type: approval
+          requires: 
+            - install_deps
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
       - build-and-deploy:
           context: deploy
           requires:
-            - install_deps
+            - verify
           filters:
             tags:
               only: /^v.*/
