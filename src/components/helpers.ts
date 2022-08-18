@@ -1,15 +1,67 @@
-import React, { CSSProperties } from "react";
+import Joi from "joi";
+import React, { CSSProperties, useContext } from "react";
+
+import FormContext from "./contexts/FormContext";
 
 export interface InputProps<ValueType> extends ComponentBase {
-    value: ValueType;
-    onChange: (value: ValueType) => void;
+    value?: ValueType;
+    onChange?: (value: ValueType) => void;
+    onBlur?: (value?: string | number) => void;
     name?: string;
+    validation?: Joi.Schema;
+    error?: string;
 }
 
 export interface ComponentBase {
     className?: string;
     style?: CSSProperties;
 }
+
+/**
+ * Compares two MIME types and see if they match
+ * @param a the first MIME to compare
+ * @param b the second MIME to compare
+ * @returns true if the MIMEtypes match
+ */
+export const compareMime = (a: string, b: string) => {
+    const [typeA, subtypeA] = a.toLowerCase().split(";")[0].split("/");
+    const [typeB, subtypeB] = b.toLowerCase().split(";")[0].split("/");
+
+    if (typeA !== typeB) return false;
+
+    if (subtypeA !== subtypeB) {
+        return subtypeA === "*";
+    }
+
+    return true;
+};
+
+/**
+ * Applies the register function to the component if it is within a form context
+ * @param component the component to apply the form context to
+ * @param defaultValue the default value of this component within the form
+ * @returns the new component that respects the form context
+ */
+export const ApplyInputFormContext = <T extends InputProps<any>>(
+    component: (props: T) => JSX.Element,
+    defaultValue?: string | number
+) => {
+    return function InputComponent(props: T) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const { register } = useContext(FormContext);
+        if (register && props.name)
+            return component({
+                ...props,
+                ...register(
+                    props.name,
+                    component.name,
+                    props.validation?.label(props.name) ?? undefined,
+                    defaultValue
+                ),
+            });
+        else return component(props);
+    };
+};
 
 /**
  * Converts an object to uppercase only if it is a string otherwise leaves it untouched

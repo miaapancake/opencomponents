@@ -13,7 +13,7 @@
     "build": "tsup && node ./tools/compilesass.js src/components/styles lib/style.css",
     "build-source": "tsup",
     "build-css": "node ./tools/compilesass.js src/components/styles lib/style.css",
-    "storybook": "start-storybook --debug-webpack -p 6006",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint src tests && stylelint \"**/*.scss\"",
     "lint-source": "eslint src tests",
@@ -68,6 +68,8 @@
   "dependencies": {
     "@openthingies/hooks": "^0.1.1-2",
     "@popperjs/core": "^2.11.5",
+    "buffer": "^6.0.3",
+    "joi": "^17.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-popper": "^2.3.0",

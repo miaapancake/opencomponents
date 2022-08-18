@@ -5,6 +5,8 @@
     border-radius: 5px;
     user-select: none;
     cursor: pointer;
+    background-color: transparent;
+    border: none;
     transition: background-color 0.2s ease-out;
     font-size: 1.1em;
 
@@ -29,6 +31,11 @@
         &:hover {
             background-color: var(--color-secondary-active);
         }
+    }
+
+    &.oc-button-right {
+        margin-right: 0;
+        float: right;
     }
 }
 

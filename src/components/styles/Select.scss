@@ -3,18 +3,21 @@
 .oc-select {
     display: inline-block;
     width: 100%;
-    max-width: 400px;
     position: relative;
     font-family: "Source Sans Pro", sans-serif;
 
     .oc-select-value {
         cursor: pointer;
         user-select: none;
-        text-align: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        padding: 10px;
+
+        span {
+            display: block;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 10px;
+        }
     }
 
     &.oc-active {
@@ -36,6 +39,7 @@
     box-shadow: 1px 2px 3px rgb(0 0 0 / 10%);
     overflow-y: auto;
     overflow-x: hidden;
+    z-index: 9999;
 
     .oc-query-input {
         margin: 10px;

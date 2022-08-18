@@ -10,6 +10,7 @@
     border: 1px solid #eaeaea;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 1.2em;
+    transition: all 100ms ease-out;
 
     &:focus-within {
         border-color: var(--color-primary);
@@ -27,6 +28,17 @@
         resize: none;
         box-sizing: border-box;
     }
+
+    &.oc-error {
+        border-left: #e74c3c 5px solid;
+    }
+
+    .oc-error-message {
+        padding: 10px;
+        padding-top: 0;
+        color: #e74c3c;
+        text-align: left;
+    }
 }
 
 .oc-text-input input,
@@ -36,30 +48,62 @@
     padding: 10px;
 }
 
-.oc-number-input {
-    display: inline-flex;
-    align-items: center;
-    justify-items: center;
-
-    input {
-        appearance: textfield;
-        width: calc(100% - 80px);
-        text-align: center;
+.oc-file-select {
+    span.oc-input-text {
+        cursor: pointer;
+        display: block;
+        padding: 20px;
     }
 
-    .oc-number-button {
+    .oc-file-item {
         display: inline-block;
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        background: none;
-        user-select: none;
-        font-weight: bold;
-        border: none;
+        font-size: 0.8em;
+        margin: 10px;
+        border-radius: 5px;
+        background-color: rgb(0 0 0 / 5%);
         cursor: pointer;
-        font-size: 1.5em;
-        vertical-align: middle;
+        transition: all ease-out 125ms;
+        user-select: none;
+
+        span {
+            display: block;
+            padding: 10px 20px;
+        }
+
+        &:hover {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+    }
+}
+
+.oc-number-input {
+    display: inline-block;
+
+    .oc-number-input-inner {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+
+        input {
+            appearance: textfield;
+            width: 100%;
+            text-align: center;
+        }
+
+        .oc-number-button {
+            display: inline-block;
+            line-height: 40px;
+            text-align: center;
+            background: none;
+            user-select: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            vertical-align: middle;
+            padding: 0 10px;
+        }
     }
 }
 

@@ -30,11 +30,12 @@ const Template = (args) => {
         <div
             style={{
                 margin: "10px auto",
-                minHeight: 300,
+                minHeight: 400,
+                maxWidth: 300,
                 textAlign: "center",
             }}
         >
-            <Select selected={selected} onSelect={setSelected}>
+            <Select value={selected} onChange={setSelected}>
                 {mockData.map((item) => (
                     <SelectItem key={item.id} label={item.name} value={item.id} />
                 ))}

@@ -1,15 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { usePopper } from "react-popper";
 
 import SelectContext, { SelectValue } from "./contexts/SelectContext";
-import { classNames, ComponentBase, PropsWithChildren } from "./helpers";
+import { ApplyInputFormContext, classNames, InputProps, PropsWithChildren } from "./helpers";
 import useSelect from "./hooks/useSelect";
 import SelectItem, { SelectItemProps } from "./SelectItem";
 import TextInput from "./TextInput";
 
-export interface SelectProps extends ComponentBase {
-    selected?: string | number | (string | number)[];
-    onSelect: (value: SelectValue | SelectValue[]) => void;
+export interface SelectProps extends InputProps<SelectValue | SelectValue[]> {
     placeholder?: string;
 }
 
@@ -36,15 +34,9 @@ function Select({
     } = useSelect(props);
 
     // Initialize PopperJS with a 5px vertical offset
-    const {
-        attributes,
-        styles: popStyles,
-        forceUpdate,
-    } = usePopper(referenceElement, popperElement, {
+    const { attributes, styles: popStyles } = usePopper(referenceElement, popperElement, {
         modifiers: [{ name: "offset", options: { offset: [0, 5] } }],
     });
-
-    useEffect(() => (forceUpdate ? forceUpdate() : undefined), [forceUpdate, displayValue, query]);
 
     return (
         <div
@@ -53,11 +45,12 @@ function Select({
         >
             <div
                 style={style}
-                className={classNames("oc-select-value", "oc-input")}
+                className={classNames("oc-select-value", "oc-input", props.error && "oc-error")}
                 ref={setReferenceElement as any}
                 onClick={() => setVisible(!visible)}
             >
-                {displayValue ?? placeholder ?? "Select..."}
+                <span>{displayValue ?? placeholder ?? "Select..."}</span>
+                {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
             </div>
             <SelectContext.Provider value={contextValue}>
                 {visible ? (
@@ -68,7 +61,7 @@ function Select({
                         {...attributes}
                     >
                         <TextInput
-                            ref={queryInputRef}
+                            innerRef={queryInputRef}
                             className="oc-query-input"
                             type="text"
                             value={query}
@@ -94,6 +87,6 @@ function Select({
     );
 }
 
-export default Object.assign(Select, {
+export default Object.assign(ApplyInputFormContext(Select), {
     Item: SelectItem,
 });

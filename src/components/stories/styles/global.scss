@@ -16,3 +16,10 @@ body {
 .accordion-header {
     padding: 10px;
 }
+
+form {
+    .oc-input,
+    .oc-select {
+        margin-bottom: 22.5px;
+    }
+}

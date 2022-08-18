@@ -4,3 +4,9 @@
     --color-secondary: #08d9d6;
     --color-secondary-active: #09ece8;
 }
+
+.oc-clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

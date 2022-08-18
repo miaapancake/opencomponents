@@ -10,7 +10,7 @@ export interface SelectItemProps {
 }
 
 export default function SelectItem({ value, label, style }: SelectItemProps) {
-    const { selected, onSelect, setQuery } = useContext(SelectContext);
+    const { value: selected, onChange: onSelect, setQuery } = useContext(SelectContext);
 
     return (
         <div

@@ -1,5 +1,5 @@
 import { useClickOutside, useKeyPress } from "@openthingies/hooks";
-import React, { useState, useMemo, useEffect, useCallback, createRef } from "react";
+import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
 
 import { SelectContextValue } from "../contexts/SelectContext";
 import { modulo, PropsWithChildren, toggleOrSetValue, valueIn } from "../helpers";
@@ -7,37 +7,47 @@ import { SelectProps } from "../Select";
 import { SelectItemProps } from "../SelectItem";
 
 export default function useSelect({
-    onSelect,
-    selected,
+    onChange,
+    value,
     children,
+    onBlur,
 }: PropsWithChildren<SelectProps, SelectItemProps>) {
-    const [visible, setVisible] = useState<boolean>(false);
+    const [visible, _setVisible] = useState<boolean>(false);
     const [query, setQuery] = useState<string>("");
     const [activeQueryItem, setActiveQueryItem] = useState<number | undefined>(undefined);
-    const queryInputRef = createRef<HTMLInputElement>();
+    const queryInputRef = useRef<HTMLInputElement>();
 
     const items = React.Children.map(children, (child) => child.props);
 
     // Handle closing the dropdown when clicking outside the dropdown
     const componentRef = useClickOutside(() => {
-        setVisible(false);
+        if (visible) setVisible(false);
         setQuery("");
     });
+
+    const setVisible = useCallback(
+        (visible: boolean) => {
+            if (!visible && onBlur) onBlur();
+            if (visible) queryInputRef.current?.focus();
+            _setVisible(visible);
+        },
+        [_setVisible, queryInputRef, onBlur]
+    );
 
     // Set context value
     const contextValue = useMemo<SelectContextValue>(
         () => ({
-            onSelect,
-            selected,
+            onChange,
+            value,
             setQuery,
         }),
-        [selected, onSelect, setQuery]
+        [onChange, value, setQuery]
     );
 
     // Get selected items
     const selectedItems = useMemo(
-        () => items.filter((item) => valueIn(item.value, selected)),
-        [selected, items]
+        () => items.filter((item) => valueIn(item.value, value)),
+        [value, items]
     );
 
     // Filter the item list by the current query
@@ -61,7 +71,7 @@ export default function useSelect({
                     // currently selected item in the dropdown menu
 
                     if (queryItems[activeQueryItem]) {
-                        onSelect(toggleOrSetValue(queryItems[activeQueryItem].value, selected));
+                        onChange(toggleOrSetValue(queryItems[activeQueryItem].value, value));
                         setQuery("");
                     }
 
@@ -89,17 +99,13 @@ export default function useSelect({
                     break;
             }
         },
-        [activeQueryItem, onSelect, queryItems, selected, setActiveQueryItem, setQuery, visible]
+        [activeQueryItem, onChange, queryItems, value, setActiveQueryItem, setQuery, visible]
     );
 
     useKeyPress(onKeyDown);
 
     // Reset the active query item if the query changes
     useEffect(() => setActiveQueryItem(undefined), [query]);
-
-    useEffect(() => {
-        if (visible) queryInputRef.current?.focus();
-    }, [visible, queryInputRef]);
 
     const displayValue = useMemo(() => {
         if (selectedItems.length > 1) {

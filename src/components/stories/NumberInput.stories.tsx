@@ -10,10 +10,10 @@ export default {
 };
 
 const Template = (args: NumberInputProps) => {
-    const [value, setValue] = useState<number>(+args.value);
+    const [value, setValue] = useState<number>(+(args.value ?? 0));
 
     useEffect(() => {
-        setValue(+args.value);
+        setValue(+(args.value ?? 0));
     }, [args.value]);
 
     return (
@@ -22,7 +22,7 @@ const Template = (args: NumberInputProps) => {
             value={value}
             min={args.min}
             max={args.max}
-            onChange={setValue}
+            onChange={(val) => (val ? setValue(val) : undefined)}
             stepSize={args.stepSize ? +args.stepSize : undefined}
         />
     );

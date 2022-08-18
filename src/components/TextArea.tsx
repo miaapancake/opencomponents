@@ -1,15 +1,16 @@
 import React, { Fragment, useCallback } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
-import { classNames, InputProps } from "./helpers";
+import { ApplyInputFormContext, classNames, InputProps } from "./helpers";
 
 import "./styles/Input.scss";
 
 export interface TextAreaProps extends InputProps<string> {
     maxLength?: number;
+    minRows?: number;
 }
 
-export default function TextArea(props: TextAreaProps) {
+function TextArea(props: TextAreaProps) {
     const onChange = useCallback(
         (value) => {
             if (props.maxLength && value.length > props.maxLength) return;
@@ -35,15 +36,18 @@ export default function TextArea(props: TextAreaProps) {
                 "oc-text-area",
                 "oc-input",
                 props.maxLength && " oc-limited",
-                props.className
+                props.className,
+                props.error && "oc-error"
             )}
             style={{ ...props.style }}
         >
             <ReactTextareaAutosize
+                minRows={props.minRows ?? 3}
                 name={props.name}
                 maxLength={props.maxLength}
                 onChange={(e) => onChange(e.target.value)}
                 value={props.value}
+                onBlur={() => props.onBlur?.call(this)}
             />
             {props.maxLength && props.value.length ? (
                 <div style={{ backgroundColor: color }} className="oc-area-counter">
@@ -52,6 +56,9 @@ export default function TextArea(props: TextAreaProps) {
             ) : (
                 <Fragment />
             )}
+            {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
         </div>
     );
 }
+
+export default ApplyInputFormContext(TextArea);
