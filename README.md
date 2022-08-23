@@ -1,9 +1,23 @@
-# OpenComponents
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/OpenThingies/OpenComponents/tree/mistress.svg?style=svg&circle-token=fc329225db45cc5e71d28a0a5b81c4a437cab1f7)](https://dl.circleci.com/status-badge/redirect/gh/OpenThingies/OpenComponents/tree/mistress)
+<!--
+logo
+-->
+[![Open Components](https://raw.githubusercontent.com/OpenThingies/Assets/mistress/img/OpenComponents/opencomponentsfull.png)](https://github.com/OpenThingies/Components)
 
+<!-- 
+badges
+-->
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/OpenThingies/Components/tree/mistress.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/OpenThingies/Components/tree/mistress)
+
+<!--
+description
+-->
 A React component library made by the OpenThingies team.
 The library is mainly used by projects from the OpenThingies team.
 
+
+<!--
+instructions
+-->
 ## Installation/Use
 
 1. First install the package with your preferred package manager
