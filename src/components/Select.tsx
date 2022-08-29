@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from "react";
-import { usePopper } from "react-popper";
+import React, { Fragment } from "react";
+
+import DownArrowIcon from "../icons/arrow-down-icon.svg";
 
 import SelectContext, { SelectValue } from "./contexts/SelectContext";
 import { ApplyInputFormContext, classNames, InputProps, PropsWithChildren } from "./helpers";
@@ -17,9 +18,6 @@ function Select({
     placeholder,
     ...props
 }: PropsWithChildren<SelectProps, SelectItemProps>) {
-    const [referenceElement, setReferenceElement] = useState<any>(null);
-    const [popperElement, setPopperElement] = useState<any>(null);
-
     const {
         setVisible,
         activeQueryItem,
@@ -31,12 +29,11 @@ function Select({
         query,
         setQuery,
         queryInputRef,
+        attributes,
+        setReferenceElement,
+        setPopperElement,
+        popStyles,
     } = useSelect(props);
-
-    // Initialize PopperJS with a 5px vertical offset
-    const { attributes, styles: popStyles } = usePopper(referenceElement, popperElement, {
-        modifiers: [{ name: "offset", options: { offset: [0, 5] } }],
-    });
 
     return (
         <div
@@ -50,6 +47,7 @@ function Select({
                 onClick={() => setVisible(!visible)}
             >
                 <span>{displayValue ?? placeholder ?? "Select..."}</span>
+                <DownArrowIcon />
                 {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
             </div>
             <SelectContext.Provider value={contextValue}>
@@ -57,7 +55,7 @@ function Select({
                     <div
                         ref={setPopperElement as any}
                         style={popStyles.popper}
-                        className={"oc-select-list"}
+                        className={classNames("oc-select-list")}
                         {...attributes}
                     >
                         <TextInput

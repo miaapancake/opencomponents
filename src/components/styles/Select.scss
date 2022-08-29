@@ -7,6 +7,7 @@
     font-family: "Source Sans Pro", sans-serif;
 
     .oc-select-value {
+        position: relative;
         cursor: pointer;
         user-select: none;
 
@@ -18,11 +19,29 @@
             white-space: nowrap;
             padding: 10px;
         }
+
+        svg {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto 0;
+            right: 15px;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            transform-origin: center;
+            transform: rotate(0deg);
+            transition: transform ease-out 100ms;
+        }
     }
 
     &.oc-active {
         .oc-select-value {
             border-color: var(--color-primary);
+
+            svg {
+                transform: rotate(-180deg);
+            }
         }
     }
 }

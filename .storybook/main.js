@@ -22,6 +22,23 @@ module.exports = {
       include: path.resolve(__dirname, '../src'),
     });
 
+  
+    // disable whatever is already set to load SVGs
+    config.module.rules
+      .filter(rule => rule.test.test('.svg'))
+      .forEach(rule => rule.exclude = /\.svg$/i);
+
+    // add SVGR instead
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: '@svgr/webpack'
+        }
+      ],
+      type: 'javascript/auto'
+    });
+
     return config;
   },
 }

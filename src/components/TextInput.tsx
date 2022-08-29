@@ -2,8 +2,6 @@ import React, { useCallback } from "react";
 
 import { ApplyInputFormContext, classNames, InputProps } from "./helpers";
 
-import "./styles/Input.scss";
-
 export interface TextInputProps extends InputProps<string> {
     type?: "text" | "email" | "password";
     maxLength?: number;
@@ -36,7 +34,7 @@ const TextInput = (props: TextInputProps) => {
                     type={props.type ?? "text"}
                     maxLength={props.maxLength}
                     onChange={(e) => onChange(e.target.value)}
-                    onBlur={() => props.onBlur?.call(this)}
+                    onBlur={() => props.onBlur?.call(undefined)}
                     value={props.value}
                 />
                 {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
