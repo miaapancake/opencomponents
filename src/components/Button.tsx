@@ -4,6 +4,7 @@ import ButtonGroupContext, { ButtonId } from "./contexts/ButtonGroupContext";
 import { addOrSetValue, classNames, ComponentBase, PropsWithAnyChildren, valueIn } from "./helpers";
 
 export interface ButtonProps extends ComponentBase {
+    onClick?: () => void;
     buttonStyle?: "primary" | "secondary" | "flat";
     id?: ButtonId;
 }
@@ -13,6 +14,7 @@ export default function Button({
     style,
     className,
     id,
+    onClick,
     ...props
 }: PropsWithAnyChildren<ButtonProps>) {
     const { onSelect, selected } = useContext(ButtonGroupContext);
@@ -22,6 +24,8 @@ export default function Button({
             onClick={() => {
                 if (onSelect && id) {
                     onSelect(addOrSetValue(id, selected));
+                } else {
+                    onClick?.call(undefined);
                 }
             }}
             style={style}

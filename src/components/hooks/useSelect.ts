@@ -1,5 +1,5 @@
 import { useClickOutside, useKeyPress } from "@openthingies/hooks";
-import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { usePopper } from "react-popper";
 
 import { SelectContextValue } from "../contexts/SelectContext";
@@ -16,7 +16,6 @@ export default function useSelect({
     const [visible, _setVisible] = useState<boolean>(false);
     const [query, setQuery] = useState<string>("");
     const [activeQueryItem, setActiveQueryItem] = useState<number | undefined>(undefined);
-    const queryInputRef = useRef<HTMLInputElement>();
     const [referenceElement, setReferenceElement] = useState<any>(null);
     const [popperElement, setPopperElement] = useState<any>(null);
 
@@ -40,14 +39,6 @@ export default function useSelect({
         },
         [_setVisible, onBlur]
     );
-
-    // Autofocus the input field once it is visible
-    useEffect(() => {
-        if (visible) {
-            queryInputRef.current.focus();
-        }
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [queryInputRef.current]);
 
     // Set context value
     const contextValue = useMemo<SelectContextValue>(
@@ -135,7 +126,6 @@ export default function useSelect({
     return {
         query,
         setQuery,
-        queryInputRef,
         visible,
         setVisible,
         activeQueryItem,

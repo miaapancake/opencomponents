@@ -6,7 +6,7 @@ import { SelectedFile } from "./FileSelect";
 import FormSubmit from "./FormSubmit";
 import { classNames, ComponentBase, InputProps } from "./helpers";
 
-interface FormProps extends PropsWithChildren<ComponentBase> {
+export interface FormProps extends PropsWithChildren<ComponentBase> {
     onSubmit: <T>(data: T) => void;
 }
 
@@ -36,7 +36,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
                     return;
                 }
 
-                let finalValue: string | FormData;
+                let finalValue: object | FormData;
 
                 if ("FileSelect" in componentTypes.current) {
                     // If the form contains at least 1 file use formdata as the payload type
@@ -53,7 +53,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
                     finalValue = formdata;
                 } else {
                     // Otherwise just a json serialized object
-                    finalValue = JSON.stringify(value);
+                    finalValue = value;
                 }
 
                 onSubmit(finalValue);

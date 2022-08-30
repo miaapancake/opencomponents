@@ -10,6 +10,7 @@ import TextInput from "./TextInput";
 
 export interface SelectProps extends InputProps<SelectValue | SelectValue[]> {
     placeholder?: string;
+    search?: boolean;
 }
 
 function Select({
@@ -28,7 +29,6 @@ function Select({
         queryItems,
         query,
         setQuery,
-        queryInputRef,
         attributes,
         setReferenceElement,
         setPopperElement,
@@ -58,13 +58,17 @@ function Select({
                         className={classNames("oc-select-list")}
                         {...attributes}
                     >
-                        <TextInput
-                            innerRef={queryInputRef}
-                            className="oc-query-input"
-                            type="text"
-                            value={query}
-                            onChange={setQuery}
-                        />
+                        {props.search ? (
+                            <TextInput
+                                innerRef={(ref) => ref?.focus()}
+                                className="oc-query-input"
+                                type="text"
+                                value={query}
+                                onChange={setQuery}
+                            />
+                        ) : (
+                            <></>
+                        )}
                         {queryItems.map((item, i) => (
                             <SelectItem
                                 key={item.value}

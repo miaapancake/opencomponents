@@ -5,7 +5,7 @@ import { ApplyInputFormContext, classNames, InputProps } from "./helpers";
 export interface TextInputProps extends InputProps<string> {
     type?: "text" | "email" | "password";
     maxLength?: number;
-    innerRef?: React.RefObject<HTMLInputElement>;
+    innerRef?: React.RefCallback<HTMLInputElement>;
 }
 
 const TextInput = (props: TextInputProps) => {
