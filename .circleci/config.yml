@@ -1,118 +1,118 @@
-version: 2.1
-jobs:
-  install_deps:
-    docker:
-      - image: node:16
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys: 
-            - yarn-packages-components-{{ checksum "yarn.lock" }}
-            - yarn-packages-components-
+# version: 2.1
+# jobs:
+#   install_deps:
+#     docker:
+#       - image: node:16
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           name: Restore Yarn Package Cache
+#           keys: 
+#             - yarn-packages-components-{{ checksum "yarn.lock" }}
+#             - yarn-packages-components-
 
-      - run:
-          name: Install dependencies
-          command: yarn install
+#       - run:
+#           name: Install dependencies
+#           command: yarn install
 
-      - save_cache:
-          name: Caching dependencies
-          key: yarn-packages-components-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
+#       - save_cache:
+#           name: Caching dependencies
+#           key: yarn-packages-components-{{ checksum "yarn.lock" }}
+#           paths:
+#             - node_modules
 
-  lint:
-    docker:
-      - image: node:16
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys: 
-            - yarn-packages-components-{{ checksum "yarn.lock" }}
-            - yarn-packages-components-
-      - run:
-          name: ESLint
-          command: yarn lint-source
-      - run:
-          name: StyleLint
-          command: yarn lint-css
+#   lint:
+#     docker:
+#       - image: node:16
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           name: Restore Yarn Package Cache
+#           keys: 
+#             - yarn-packages-components-{{ checksum "yarn.lock" }}
+#             - yarn-packages-components-
+#       - run:
+#           name: ESLint
+#           command: yarn lint-source
+#       - run:
+#           name: StyleLint
+#           command: yarn lint-css
 
-  test:
-    docker:
-      - image: node:16
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys: 
-            - yarn-packages-components-{{ checksum "yarn.lock" }}
-            - yarn-packages-components-
-      - run:
-          name: Run Unit Tests
-          command: yarn test
+#   test:
+#     docker:
+#       - image: node:16
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           name: Restore Yarn Package Cache
+#           keys: 
+#             - yarn-packages-components-{{ checksum "yarn.lock" }}
+#             - yarn-packages-components-
+#       - run:
+#           name: Run Unit Tests
+#           command: yarn test
 
-  build-and-deploy:
-    docker:
-      - image: node:16
-    steps:
-        - checkout
-        - restore_cache:
-            name: Restore Yarn Package Cache
-            keys: 
-              - yarn-packages-components-{{ checksum "yarn.lock" }}
-              - yarn-packages-components-
-        - run:
-            name: Build Source files
-            command: yarn build-source
-        - run:
-            name: Build CSS files
-            command: yarn build-css
-        - run:
-            name: Authenticate with registry
-            command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >> $PWD/.npmrc
-        - run:
-            name: Publish package to NPM
-            command: npm publish
+#   build-and-deploy:
+#     docker:
+#       - image: node:16
+#     steps:
+#         - checkout
+#         - restore_cache:
+#             name: Restore Yarn Package Cache
+#             keys: 
+#               - yarn-packages-components-{{ checksum "yarn.lock" }}
+#               - yarn-packages-components-
+#         - run:
+#             name: Build Source files
+#             command: yarn build-source
+#         - run:
+#             name: Build CSS files
+#             command: yarn build-css
+#         - run:
+#             name: Authenticate with registry
+#             command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >> $PWD/.npmrc
+#         - run:
+#             name: Publish package to NPM
+#             command: npm publish
 
 
-workflows:
-  version: 2
+# workflows:
+#   version: 2
 
-  main:
-    jobs:
-      - install_deps
-      - test:
-          requires:
-            - install_deps
-      - lint:
-          requires:
-            - install_deps
+#   main:
+#     jobs:
+#       - install_deps
+#       - test:
+#           requires:
+#             - install_deps
+#       - lint:
+#           requires:
+#             - install_deps
 
-  tag:
-    jobs:
-      - install_deps:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - verify:
-          type: approval
-          requires: 
-            - install_deps
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+#   tag:
+#     jobs:
+#       - install_deps:
+#           filters:
+#             tags:
+#               only: /^v.*/
+#             branches:
+#               ignore: /.*/
+#       - verify:
+#           type: approval
+#           requires: 
+#             - install_deps
+#           filters:
+#             tags:
+#               only: /^v.*/
+#             branches:
+#               ignore: /.*/
 
-      - build-and-deploy:
-          context: deploy
-          requires:
-            - verify
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+#       - build-and-deploy:
+#           context: deploy
+#           requires:
+#             - verify
+#           filters:
+#             tags:
+#               only: /^v.*/
+#             branches:
+#               ignore: /.*/
