@@ -1,0 +1,59 @@
+.oc-slider {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    min-height: 50px;
+    user-select: none;
+
+    .oc-slider-track,
+    .oc-slider-track-fill {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        background-color: #ddd;
+        height: 9px;
+        border-radius: 3px;
+    }
+
+    .oc-slider-handle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #000;
+        cursor: pointer;
+    }
+
+    .oc-slider-track-mark {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 6px;
+        background-color: var(--color-primary);
+
+        &.oc-active-mark {
+            background-color: #fff;
+        }
+    }
+
+    .oc-slider-track-mark-label {
+        position: absolute;
+        width: 50px;
+        top: 40px;
+        line-height: 1.5em;
+        white-space: nowrap;
+        text-align: center;
+    }
+}
