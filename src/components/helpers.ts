@@ -11,7 +11,85 @@ export interface InputProps<ValueType> extends ComponentBase {
     validation?: Joi.Schema;
     error?: string;
 }
+/**
+ * Reducer function that splits the array into chunks of size n
+ * @param chunkSize the size of the chunks
+ * @returns a new array containing these chunks
+ */
+export const chunkReducer = (chunkSize: number) => (resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / chunkSize);
 
+    if (!resultArray[chunkIndex]) {
+        resultArray[chunkIndex] = []; // start a new chunk
+    }
+
+    resultArray[chunkIndex].push(item);
+
+    return resultArray;
+};
+
+/**
+ * Month numbers mapped to words
+ */
+export const monthWords = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+];
+
+/**
+ * Day numbers mapped to letters
+ */
+export const dayLetters = ["M", "T", "W", "T", "F", "S", "S"];
+
+/**
+ * Gets the amount of days in a given month
+ * @param year Year
+ * @param month Month
+ * @returns Days in the specified month
+ */
+export function getDaysInMonth(year, month) {
+    return new Date(year, month+1, 0).getDate();
+}
+
+/**
+ * Gets the weekday of a date
+ * @param year
+ * @param month
+ * @param day
+ * @returns The day of the week
+ */
+export function getWeekDay(year, month, day) {
+    return new Date(year, month, day).getDay();
+}
+
+/**
+ * Compare two dates without time
+ * @param date First date to compare
+ * @param date2 Second date to compare
+ * @returns True if the dates match
+ */
+export function compareDate(date: Date, date2: Date) {
+    if (date === undefined || date2 === undefined) return false;
+    return (
+        date.getDate() == date2.getDate() &&
+        date.getMonth() == date2.getMonth() &&
+        date.getFullYear() == date2.getFullYear()
+    );
+}
+
+/**
+ * The base interface for all component props
+ */
 export interface ComponentBase {
     className?: string;
     style?: CSSProperties;
@@ -43,10 +121,10 @@ export const compareMime = (a: string, b: string) => {
  * @returns the new component that respects the form context
  */
 export const ApplyInputFormContext = <T extends InputProps<any>>(
-    component: (props: T) => JSX.Element,
+    component: React.FunctionComponent<T>,
     defaultValue?: string | number
-) => {
-    return function InputComponent(props: T) {
+): React.FunctionComponent<T> => {
+    return Object.assign(function InputComponent(props: T) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const { register } = useContext(FormContext);
         if (register && props.name)
@@ -60,7 +138,7 @@ export const ApplyInputFormContext = <T extends InputProps<any>>(
                 ),
             });
         else return component(props);
-    };
+    }, component);
 };
 
 /**
