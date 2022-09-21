@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 
 import SliderContext, { useSliderContext } from "./contexts/SliderContext";
 import { classNames } from "./helpers";
@@ -21,7 +21,7 @@ function BaseSliderTrack(props: BaseSliderTrackProps) {
 
     // If stepsize is set but no trackmarks are given
     // we want to match the trackmarks to the stepsize
-    if (stepSize && !trackMarks) {
+    if (stepSize > 1 && !trackMarks) {
         // We start at index 0 because stepsize is always 0 aligned
         for (let i = 0; i < maxValue; i += stepSize) {
             // So for all stepvalues that are past the minSize we add a marker
@@ -50,16 +50,13 @@ function BaseSliderTrack(props: BaseSliderTrackProps) {
                 }}
                 className="oc-slider-track-fill"
             ></div>
-            {marks
-                // Filter out the trackmarks outside of the track and the two that can appear
-                // at minValue and maxValue. these don't render very well and honestly are kind
-                // of unnesesary since the start and end of the track already indicates those
-                // points well enough.
-                ?.filter((x) => (!minValue || x.value > minValue) && x.value < maxValue)
-                .map((mark) => {
-                    const pos = ((mark.value - minValue) / (maxValue - minValue)) * 100;
-                    return (
-                        <>
+            {marks.map((mark) => {
+                const pos = ((mark.value - minValue) / (maxValue - minValue)) * 100;
+                return (
+                    <Fragment key={"marker" + mark.value}>
+                        {((minValue !== undefined && mark.value > minValue) ||
+                            (minValue === undefined && mark.value > 0)) &&
+                        mark.value < maxValue ? (
                             <div
                                 className={classNames(
                                     "oc-slider-track-mark",
@@ -67,21 +64,24 @@ function BaseSliderTrack(props: BaseSliderTrackProps) {
                                 )}
                                 style={{ left: `calc(${pos}%)` }}
                             ></div>
-                            {mark.label ? (
-                                <div
-                                    className={classNames("oc-slider-track-mark-label")}
-                                    style={{ left: `calc(${pos}% - 25px)` }}
-                                >
-                                    {typeof mark.label === "string"
-                                        ? mark.label
-                                        : mark.label?.call(undefined, mark.value)}
-                                </div>
-                            ) : (
-                                <></>
-                            )}
-                        </>
-                    );
-                })}
+                        ) : (
+                            <></>
+                        )}
+                        {mark.label ? (
+                            <div
+                                className={classNames("oc-slider-track-mark-label")}
+                                style={{ left: `calc(${pos}% - 25px)` }}
+                            >
+                                {typeof mark.label === "string"
+                                    ? mark.label
+                                    : mark.label?.call(undefined, mark.value)}
+                            </div>
+                        ) : (
+                            <></>
+                        )}
+                    </Fragment>
+                );
+            })}
         </>
     );
 }
