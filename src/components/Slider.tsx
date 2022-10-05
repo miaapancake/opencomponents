@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import SliderContext from "./contexts/SliderContext";
+import { ApplyInputFormContext } from "./helpers";
 import { RangeSliderHandle, SliderHandle } from "./SliderHandle";
 import { RangeSliderTrack, SliderTrack } from "./SliderTrack";
 
-interface SliderProps<T extends number | [number, number]> {
+export interface SliderProps<T extends number | [number, number]> {
     value: T;
     min?: number;
     max: number;
@@ -18,14 +19,16 @@ export interface SliderTrackMark {
     value: number;
 }
 
-export default function Slider<T extends number | [number, number]>({
+const Slider: React.FC<SliderProps<number | [number, number]>> = <
+    T extends number | [number, number]
+>({
     value,
     onChange,
     min,
     max: maxValue,
     trackMarks,
     stepSize,
-}: SliderProps<T>) {
+}: SliderProps<T>) => {
     const [displayValue, setDisplayValue] = useState<number | [number, number]>(value);
     const rootRef = useRef<HTMLDivElement>();
 
@@ -62,4 +65,6 @@ export default function Slider<T extends number | [number, number]>({
             </SliderContext.Provider>
         </div>
     );
-}
+};
+
+export default ApplyInputFormContext<SliderProps<number | [number, number]>>(Slider);
