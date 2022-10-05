@@ -1,4 +1,4 @@
-import { getDaysInMonth } from '../../src/components/helpers';
+import { getDaysInMonth } from "../../src/components/helpers";
 
 describe("GetDaysInMonth Function", () => {
     it("Gets the correct amount of days", () => {

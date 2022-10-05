@@ -58,7 +58,7 @@ export const dayLetters = ["M", "T", "W", "T", "F", "S", "S"];
  * @returns Days in the specified month
  */
 export function getDaysInMonth(year, month) {
-    return new Date(year, month+1, 0).getDate();
+    return new Date(year, month + 1, 0).getDate();
 }
 
 /**

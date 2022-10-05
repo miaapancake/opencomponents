@@ -1,0 +1,73 @@
+kind: pipeline
+name: CI Testing
+type: docker
+
+steps:
+
+- name: Prepare
+  image: alpine
+  commands:
+  - sha1sum yarn.lock | awk '{print "yarn-"$1}' | tee .cache_key
+
+- name: Restore Cache
+  image: drillster/drone-volume-cache
+  depends_on: [ Prepare ]
+  settings:
+    restore: true
+    mount:
+      - ./node_modules
+  volumes:
+    - name: node_cache
+      path: /cache
+
+- name: Yarn Install
+  image: node
+  depends_on: [ "Restore Cache" ]
+  volumes:
+    - name: yarncache
+      path: /yarncache
+  commands:
+  - yarn install --prefer-offline --frozen-lockfile --cache-dir /yarncache
+
+- name: Tests
+  image: node
+  depends_on: [ "Yarn Install" ]
+  commands:
+  - yarn test
+
+- name: Lint Source
+  image: node
+  depends_on: [ "Yarn Install" ]
+  commands:
+  - yarn lint-source
+
+- name: Lint CSS
+  image: node
+  depends_on: [ "Yarn Install" ]
+  commands:
+  - yarn lint-css
+
+- name: Build
+  image: node
+  depends_on: [ "Yarn Install" ]
+  commands:
+  - yarn build
+
+- name: Rebuild Cache
+  image: drillster/drone-volume-cache
+  depends_on: [ "Yarn Install" ]
+  volumes:
+    - name: node_cache
+      path: /cache
+  settings:
+    rebuild: true
+    mount:
+      - ./node_modules
+
+volumes:
+  - name: yarncache
+    host:
+      path: /tmp/yarncache
+  - name: node_cache
+    host:
+      path: /tmp/node_modules

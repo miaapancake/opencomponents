@@ -1,4 +1,4 @@
-import { getWeekDay } from '../../src/components/helpers';
+import { getWeekDay } from "../../src/components/helpers";
 
 describe("GetWeekDay Function", () => {
     it("Gets the correct weekday", () => {

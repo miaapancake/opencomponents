@@ -10,7 +10,7 @@ export function useDatePickerBase(startDate: Date) {
 
     const [daysPrev, days] = useMemo(
         () => [
-            getDaysInMonth(viewYear, viewMonth-1),
+            getDaysInMonth(viewYear, viewMonth - 1),
             [...Array(getDaysInMonth(viewYear, viewMonth)).keys()].map((day) => day + 1),
         ],
         [viewYear, viewMonth]
