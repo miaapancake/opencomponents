@@ -2,12 +2,33 @@ import React, { useCallback, useContext, useEffect, useRef } from "react";
 
 import SliderContext, { useSliderContext } from "./contexts/SliderContext";
 import { clamp } from "./helpers";
+import styled from '@emotion/styled';
+import { WithTheme } from "./Theme";
+import { useTheme } from "./contexts/ThemeContext";
 
 interface SliderHandleProps {
     height?: number;
     width?: number;
-    color?: string;
 }
+interface BaseSliderHandleProps {
+    width: number;
+    height: number;
+    value: number;
+}
+
+const BaseSliderHandle = styled.div<WithTheme<BaseSliderHandleProps>>(({theme, width, height, value}) => {
+    return ({
+        backgroundColor: theme.primaryColor,
+        borderRadius: '50%',
+        width: width ?? 25,
+        height: height ?? 25,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        marginTop: "auto",
+        marginBottom: "auto"
+    })
+});
 
 export function SliderHandle(props: SliderHandleProps) {
     const {
@@ -64,16 +85,26 @@ export function SliderHandle(props: SliderHandleProps) {
         onChange(displayValue);
     }, [onChange, displayValue, holding]);
 
+    useEffect(() => {
+        document.addEventListener("mousemove", TrackMovement);
+        document.addEventListener("mouseup", LetGo);
+
+        return () => {
+            document.removeEventListener("mousemove", TrackMovement);
+            document.removeEventListener("mouseup", LetGo);
+        };
+    }, [LetGo, TrackMovement]);
+
     return (
         <BaseSliderHandle
-            onMouseDown={() => (holding.current = true)}
-            width={props.width}
+            style={{left: `calc(${((displayValue - minValue) / (maxValue - minValue)) * 100}% - ${(props.width ?? 25)/2}px)`}}
+            onMouseDown={() => holding.current = true}
             height={props.height}
+            width={props.width}
             value={displayValue}
-            color={props.color}
-            TrackMovement={TrackMovement}
-            LetGo={LetGo}
-        />
+            theme={useTheme()}
+            className="oc-slider-handle"
+        ></BaseSliderHandle>
     );
 }
 
@@ -155,43 +186,6 @@ export function RangeSliderHandle(props: { index: number } & SliderHandleProps) 
         onChange(displayValue);
     }, [onChange, displayValue, holding]);
 
-    return (
-        <BaseSliderHandle
-            onMouseDown={() => (holding.current = true)}
-            width={props.width}
-            height={props.height}
-            value={displayValue[props.index]}
-            color={props.color}
-            TrackMovement={TrackMovement}
-            LetGo={LetGo}
-        />
-    );
-}
-
-interface BaseSliderHandleProps {
-    width: number;
-    height: number;
-    value: number;
-    color?: string;
-    onMouseDown: () => void;
-    TrackMovement: (e: MouseEvent) => void;
-    LetGo: () => void;
-}
-
-export function BaseSliderHandle({
-    width: propWidth,
-    height: propHeight,
-    value,
-    onMouseDown,
-    color,
-    TrackMovement,
-    LetGo,
-}: BaseSliderHandleProps) {
-    const width = propWidth ?? 20;
-    const height = propHeight ?? 20;
-
-    const { minValue, maxValue } = useSliderContext();
-
     useEffect(() => {
         document.addEventListener("mousemove", TrackMovement);
         document.addEventListener("mouseup", LetGo);
@@ -203,17 +197,14 @@ export function BaseSliderHandle({
     }, [LetGo, TrackMovement]);
 
     return (
-        <div
-            onMouseDown={onMouseDown}
-            style={{
-                width,
-                height,
-                left: `calc(-${width / 2}px + ${
-                    ((value - minValue) / (maxValue - minValue)) * 100
-                }%)`,
-                backgroundColor: color ?? "var(--color-primary)",
-            }}
+        <BaseSliderHandle
+            style={{left: `calc(${((displayValue[props.index] - minValue) / (maxValue - minValue)) * 100}% - ${(props.width ?? 25)/2}px)`}}
+            onMouseDown={() => holding.current = true}
+            height={props.height}
+            width={props.width}
+            value={displayValue[props.index]}
+            theme={useTheme()}
             className="oc-slider-handle"
-        ></div>
+        ></BaseSliderHandle>
     );
 }

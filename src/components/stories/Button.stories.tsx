@@ -1,11 +1,11 @@
 import { ComponentMeta } from "@storybook/react";
-import React, { useState } from "react";
+import React from "react";
 
-import Slider, { SliderProps } from "../Slider";
+import Button, { ButtonProps } from "../Button";
 
 export default {
-    title: "OpenComponents/Components/Slider",
-    component: Slider,
+    title: "OpenComponents/Components/Button",
+    component: Button,
     decorators: [(Story) => <div style={{ margin: "3em auto", maxWidth: "400px" }}>{Story()}</div>],
     argTypes: {
         value: {
@@ -64,70 +64,15 @@ giving on the otherhand an array of two numbers will give a ranged slider`,
             },
         },
     },
-} as ComponentMeta<typeof Slider>;
+} as ComponentMeta<typeof Button>;
 
-const Template = <T extends number | [number, number]>(args: SliderProps<T>) => {
-    const [value, setValue] = useState<number | [number, number]>(args.value);
-    const [value2, setValue2] = useState<number | [number, number]>(args.value);
-
-    return (
-    <>
-    <Slider {...args} value={value} onChange={setValue} />
-    <Slider {...args} value={value2} onChange={setValue2} />
-    </>);
+const Template = (args: ButtonProps) => {
+    return(
+        <Button {...args}>Clicky Click</Button>
+    );
 };
 
 export const Simple = Template.bind({});
 
-Simple.args = { value: 20, min: 0, max: 100 };
-
-export const WithStepSize = Template.bind({});
-
-WithStepSize.args = { value: 20, min: 0, max: 100, stepSize: 10 };
-
-export const WithTrackMarkers = Template.bind({});
-
-WithTrackMarkers.args = {
-    value: 20,
-    min: 0,
-    max: 100,
-    stepSize: 5,
-    trackMarks: [
-        { value: 0, label: (value) => `$${value}` },
-        { value: 20, label: (value) => `$${value}` },
-        { value: 40, label: (value) => `$${value}` },
-        { value: 60, label: (value) => `$${value}` },
-        { value: 80, label: (value) => `$${value}` },
-        { value: 100, label: (value) => `$${value}` },
-    ],
-};
-
-export const WithRestrictedMarkers = Template.bind({});
-
-WithRestrictedMarkers.args = {
-    value: 1,
-    min: 1,
-    max: 3,
-    stepSize: null,
-    trackMarks: [
-        { value: 1, label: () => "Slow" },
-        { value: 2, label: () => "Medium" },
-        { value: 3, label: () => "Fast" },
-    ],
-};
-
-export const RangedExample = Template.bind({});
-
-RangedExample.args = {
-    value: [200, 1200],
-    min: 0,
-    max: 2000,
-    stepSize: 10,
-    trackMarks: [
-        { value: 0, label: (value) => `$${value}` },
-        { value: 500, label: (value) => `$${value}` },
-        { value: 1000, label: (value) => `$${value}` },
-        { value: 1500, label: (value) => `$${value}` },
-        { value: 2000, label: (value) => `$${value}` },
-    ],
+Simple.args = {
 };

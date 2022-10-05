@@ -2,25 +2,37 @@ import React, { useContext } from "react";
 
 import ButtonGroupContext, { ButtonId } from "./contexts/ButtonGroupContext";
 import { addOrSetValue, classNames, ComponentBase, PropsWithAnyChildren, valueIn } from "./helpers";
+import styled from '@emotion/styled'
+import { WithTheme } from "./Theme";
+import { useTheme } from "./contexts/ThemeContext";
 
 export interface ButtonProps extends ComponentBase {
     onClick?: () => void;
-    buttonStyle?: "primary" | "secondary" | "flat";
     id?: ButtonId;
 }
 
+const BaseButton = styled.div<WithTheme<ButtonProps>>(({theme}) => ({
+    padding: 10,
+    backgroundColor: theme.primaryColor,
+    color: theme.textColorPrimary,
+    borderRadius: theme.roundingFactor * 5,
+    cursor: "pointer",
+    ":hover": {
+        backgroundColor: theme.primaryColorHover
+    }
+}))
+
 export default function Button({
-    buttonStyle,
-    style,
     className,
     id,
     onClick,
     ...props
 }: PropsWithAnyChildren<ButtonProps>) {
     const { onSelect, selected } = useContext(ButtonGroupContext);
+    const theme = useTheme();
 
     return (
-        <div
+        <BaseButton
             onClick={() => {
                 if (onSelect && id) {
                     onSelect(addOrSetValue(id, selected));
@@ -28,15 +40,14 @@ export default function Button({
                     onClick?.call(undefined);
                 }
             }}
-            style={style}
             className={classNames(
                 "oc-button",
-                `oc-${buttonStyle}`,
-                valueIn(id, selected) && "oc-selected",
                 className
             )}
+            {...props}
+            theme={theme}
         >
             {props.children}
-        </div>
+        </BaseButton>
     );
 }
