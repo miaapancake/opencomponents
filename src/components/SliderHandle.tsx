@@ -1,10 +1,9 @@
+import styled from "@emotion/styled";
 import React, { useCallback, useContext, useEffect, useRef } from "react";
 
 import SliderContext, { useSliderContext } from "./contexts/SliderContext";
-import { clamp } from "./helpers";
-import styled from '@emotion/styled';
-import { WithTheme } from "./Theme";
 import { useTheme } from "./contexts/ThemeContext";
+import { clamp } from "./helpers";
 
 interface SliderHandleProps {
     height?: number;
@@ -16,19 +15,17 @@ interface BaseSliderHandleProps {
     value: number;
 }
 
-const BaseSliderHandle = styled.div<WithTheme<BaseSliderHandleProps>>(({theme, width, height, value}) => {
-    return ({
-        backgroundColor: theme.primaryColor,
-        borderRadius: '50%',
-        width: width ?? 25,
-        height: height ?? 25,
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        marginTop: "auto",
-        marginBottom: "auto"
-    })
-});
+const BaseSliderHandle = styled.div<BaseSliderHandleProps>(({ width, height }) => ({
+    backgroundColor: useTheme().primaryColor,
+    borderRadius: "50%",
+    width: width ?? 25,
+    height: height ?? 25,
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    marginTop: "auto",
+    marginBottom: "auto",
+}));
 
 export function SliderHandle(props: SliderHandleProps) {
     const {
@@ -95,10 +92,14 @@ export function SliderHandle(props: SliderHandleProps) {
         };
     }, [LetGo, TrackMovement]);
 
+    const handleOffset = ((displayValue - minValue) / (maxValue - minValue)) * 100;
+
     return (
         <BaseSliderHandle
-            style={{left: `calc(${((displayValue - minValue) / (maxValue - minValue)) * 100}% - ${(props.width ?? 25)/2}px)`}}
-            onMouseDown={() => holding.current = true}
+            style={{
+                left: `calc(${handleOffset}% - ${(props.width ?? 25) / 2}px)`,
+            }}
+            onMouseDown={() => (holding.current = true)}
             height={props.height}
             width={props.width}
             value={displayValue}
@@ -196,10 +197,17 @@ export function RangeSliderHandle(props: { index: number } & SliderHandleProps) 
         };
     }, [LetGo, TrackMovement]);
 
+    const isLeftHandle = props.index === 0;
+    const leftOverHalf = displayValue[0] >= maxValue / 2;
+    const handleOffset = ((displayValue[props.index] - minValue) / (maxValue - minValue)) * 100;
+
     return (
         <BaseSliderHandle
-            style={{left: `calc(${((displayValue[props.index] - minValue) / (maxValue - minValue)) * 100}% - ${(props.width ?? 25)/2}px)`}}
-            onMouseDown={() => holding.current = true}
+            style={{
+                left: `calc(${handleOffset}% - ${(props.width ?? 25) / 2}px)`,
+                zIndex: leftOverHalf ? (isLeftHandle ? 100 : 99) : isLeftHandle ? 99 : 100,
+            }}
+            onMouseDown={() => (holding.current = true)}
             height={props.height}
             width={props.width}
             value={displayValue[props.index]}

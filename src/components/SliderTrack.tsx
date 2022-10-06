@@ -1,16 +1,12 @@
+import styled from "@emotion/styled";
 import React, { Fragment, useContext } from "react";
 
-import SliderContext, { useSliderContext } from "./contexts/SliderContext";
-import styled from '@emotion/styled';
-import { WithTheme } from "./Theme";
+import SliderContext from "./contexts/SliderContext";
 import { useTheme } from "./contexts/ThemeContext";
 
-interface CommonSliderTrackProps {
-}
-
-const BaseSliderTrack = styled.div<WithTheme<CommonSliderTrackProps>>(({theme}) => ({
-    position: 'absolute',
-    width: '100%',
+const BaseSliderTrack = styled.div<any>({
+    position: "absolute",
+    width: "100%",
     left: 0,
     top: 0,
     bottom: 0,
@@ -18,50 +14,54 @@ const BaseSliderTrack = styled.div<WithTheme<CommonSliderTrackProps>>(({theme}) 
     marginBottom: "auto",
     backgroundColor: "#ddd",
     height: 9,
-    borderRadius: 3
-}));
-
-const BaseSliderTrackFill = styled(BaseSliderTrack)(({theme}) => ({
-    backgroundColor: theme.primaryColor
-}));
-
-const TrackMark = styled.div<WithTheme<{value: number, start: number, end: number}>>((props) => {
-
-    return({
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        marginTop: "auto",
-        marginBottom: "auto",
-        transform: "translateX(-50%)",
-        width: 2,
-        height: 6,
-        backgroundColor: props.value > props.start && props.value < props.end ? "#fff" : props.theme.primaryColor
-    });
-
+    borderRadius: 3,
 });
 
-const TrackMarkLabel = styled(TrackMark)((props) => {
+const BaseSliderTrackFill = styled(BaseSliderTrack)(() => ({
+    backgroundColor: useTheme().primaryColor,
+}));
 
-    return ({
-        borderRadius: 5 * props.theme.roundingFactor,
-        backgroundColor: props.value >= (props.start) &&  props.value <= (props.end) ? props.theme.primaryColor : "#aaa",
-        color: props.theme.textColorPrimary,
+const TrackMark = styled.div<{ value: number; start: number; end: number }>((props) => ({
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    marginTop: "auto",
+    marginBottom: "auto",
+    transform: "translateX(-50%)",
+    width: 2,
+    height: 6,
+    backgroundColor:
+        props.value > props.start && props.value < props.end ? "#fff" : useTheme().primaryColor,
+}));
+
+const TrackMarkLabel = styled(TrackMark)((props) => {
+    const theme = useTheme();
+
+    return {
+        borderRadius: 5 * theme.roundingFactor,
+        backgroundColor:
+            props.value >= props.start && props.value <= props.end ? theme.primaryColor : "#aaa",
+        color: theme.textPrimaryColorContrast,
         minWidth: "min-content",
         padding: "0px 5px",
         top: 40,
         height: "min-content",
         lineHeight: "1.5em",
         whiteSpace: "nowrap",
+        fontSize: ".9em",
         textAlign: "center",
-        fontFamily: ["Source Sans Pro", "sans-serif"]
-    });
-    
+        fontFamily: theme.defaultFont,
+    };
 });
 
-export default function SliderTrack(props: CommonSliderTrackProps) {
-    const { displayValue: value, maxValue, minValue, trackMarks, stepSize } = useContext(SliderContext);
-    const theme = useTheme();
+export default function SliderTrack(props: any) {
+    const {
+        displayValue: value,
+        maxValue,
+        minValue,
+        trackMarks,
+        stepSize,
+    } = useContext(SliderContext);
 
     // If the trackmarks are already set just use those,
     // otherwise set them to an empty array that we can
@@ -82,33 +82,23 @@ export default function SliderTrack(props: CommonSliderTrackProps) {
     }
 
     let start: number, end: number, maxWidth: string, left: string;
-    if(Array.isArray(value)) {
-        [start,end] = value;
+    if (Array.isArray(value)) {
+        [start, end] = value;
         const startPos = ((start - minValue) / (maxValue - minValue)) * 100;
         const endPos = ((end - minValue) / (maxValue - minValue)) * 100;
         maxWidth = `${endPos - startPos}%`;
         left = `${startPos}%`;
-    }else {
+    } else {
         maxWidth = `${((value - minValue) / (maxValue - minValue)) * 100}%`;
-        left = '0px';
-        [start,end] = [minValue ?? 0, value];
+        left = "0px";
+        [start, end] = [minValue ?? 0, value];
     }
 
     return (
         <>
-            <BaseSliderTrack
-                {...props}
-                theme={theme}
-                className="oc-slider-track"
-            />
-            <BaseSliderTrackFill
-                {...props}
-                theme={theme}
-                style={{left, maxWidth}}
-                className="oc-slider-track-fill"
-            />
+            <BaseSliderTrack {...props} />
+            <BaseSliderTrackFill {...props} style={{ left, maxWidth }} />
             {marks.map((mark) => {
-                
                 const pos = ((mark.value - minValue) / (maxValue - minValue)) * 100;
 
                 return (
@@ -120,8 +110,7 @@ export default function SliderTrack(props: CommonSliderTrackProps) {
                                 start={start}
                                 end={end}
                                 value={mark.value}
-                                theme={theme}
-                                style={{left: `${pos}%`}}
+                                style={{ left: `${pos}%` }}
                             ></TrackMark>
                         ) : (
                             <></>
@@ -131,8 +120,7 @@ export default function SliderTrack(props: CommonSliderTrackProps) {
                                 value={mark.value}
                                 start={start}
                                 end={end}
-                                theme={theme}
-                                style={{left: `${pos}%`}}
+                                style={{ left: `${pos}%` }}
                             >
                                 {typeof mark.label === "string"
                                     ? mark.label

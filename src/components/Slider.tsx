@@ -1,12 +1,10 @@
+import styled from "@emotion/styled";
 import React, { useEffect, useRef, useState } from "react";
 
 import SliderContext from "./contexts/SliderContext";
 import { ApplyInputFormContext } from "./helpers";
 import { RangeSliderHandle, SliderHandle } from "./SliderHandle";
 import SliderTrack from "./SliderTrack";
-import styled from "@emotion/styled";
-import { useTheme } from "./contexts/ThemeContext";
-import { WithTheme } from "./Theme";
 export interface SliderProps<T extends number | [number, number]> {
     value: T;
     min?: number;
@@ -16,13 +14,13 @@ export interface SliderProps<T extends number | [number, number]> {
     stepSize?: number | null;
 }
 
-const BaseSlider = styled.div<WithTheme<SliderProps<any>>>(({theme}) => ({
+const BaseSlider = styled.div({
     display: "inline-block",
     position: "relative",
     width: "100%",
     minHeight: 50,
-    userSelect: "none"
-}));
+    userSelect: "none",
+});
 
 export interface SliderTrackMark {
     label?: string | ((value: number) => string);
@@ -31,7 +29,10 @@ export interface SliderTrackMark {
 
 const Slider: React.FC<SliderProps<number | [number, number]>> = <
     T extends number | [number, number]
->({onChange, ...props}: SliderProps<T>) => {
+>({
+    onChange,
+    ...props
+}: SliderProps<T>) => {
     const { value, min, max: maxValue, trackMarks, stepSize } = props;
     const [displayValue, setDisplayValue] = useState<number | [number, number]>(value);
     const rootRef = useRef<HTMLDivElement>();
@@ -41,7 +42,7 @@ const Slider: React.FC<SliderProps<number | [number, number]>> = <
     }, [value, setDisplayValue]);
 
     return (
-        <BaseSlider {...props} theme={useTheme()} ref={rootRef}>
+        <BaseSlider ref={rootRef}>
             <SliderContext.Provider
                 value={{
                     displayValue: displayValue,
@@ -56,7 +57,7 @@ const Slider: React.FC<SliderProps<number | [number, number]>> = <
             >
                 <SliderTrack />
                 {!Array.isArray(value) ? (
-                        <SliderHandle />
+                    <SliderHandle />
                 ) : (
                     <>
                         <RangeSliderHandle index={0} />

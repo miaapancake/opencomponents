@@ -68,13 +68,8 @@ giving on the otherhand an array of two numbers will give a ranged slider`,
 
 const Template = <T extends number | [number, number]>(args: SliderProps<T>) => {
     const [value, setValue] = useState<number | [number, number]>(args.value);
-    const [value2, setValue2] = useState<number | [number, number]>(args.value);
 
-    return (
-    <>
-    <Slider {...args} value={value} onChange={setValue} />
-    <Slider {...args} value={value2} onChange={setValue2} />
-    </>);
+    return <Slider {...args} value={value} onChange={setValue} />;
 };
 
 export const Simple = Template.bind({});

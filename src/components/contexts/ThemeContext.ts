@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 
 import { defaultTheme, Theme } from "../Theme";
 
-
 const context = React.createContext<Theme>(defaultTheme);
 context.displayName = "ThemeContext";
 

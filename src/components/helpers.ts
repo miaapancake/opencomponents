@@ -2,7 +2,6 @@ import Joi from "joi";
 import React, { CSSProperties, useContext } from "react";
 
 import FormContext from "./contexts/FormContext";
-import { Theme } from "./Theme";
 
 export interface InputProps<ValueType> extends ComponentBase {
     value?: ValueType;
