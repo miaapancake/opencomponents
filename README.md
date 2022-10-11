@@ -1,7 +1,7 @@
 <!--
 logo
 -->
-[![Open Components](https://raw.githubusercontent.com/OpenThingies/Assets/mistress/img/OpenComponents/opencomponentsfull.png)](https://github.com/OpenThingies/Components)
+[![Open Components](https://git.openthingies.com/OpenThingies/assets/raw/branch/mistress/img/OpenComponents/opencomponentsfull.png)](https://git.openthingies.com/OpenThingies/components)
 
 <!-- 
 badges
@@ -24,11 +24,11 @@ instructions
 
     Yarn:
     ```bash
-    yarn add opencomponents
+    yarn add @openthingies/components
     ```
     NPM:
     ```bash
-    npm i opencomponents
+    npm i @openthingies/components
     ```
 
 ## Development
