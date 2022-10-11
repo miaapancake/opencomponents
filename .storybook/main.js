@@ -15,13 +15,6 @@ module.exports = {
     "builder": "@storybook/builder-webpack5"
   },
   webpackFinal: async (config, { configType }) => {
-
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path.resolve(__dirname, '../src'),
-    });
-
   
     // disable whatever is already set to load SVGs
     config.module.rules
