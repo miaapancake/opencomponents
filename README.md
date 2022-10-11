@@ -24,11 +24,11 @@ instructions
 
     Yarn:
     ```bash
-    yarn add opencomponents
+    yarn add @openthingies/components
     ```
     NPM:
     ```bash
-    npm i opencomponents
+    npm i @openthingies/components
     ```
 
 ## Development
