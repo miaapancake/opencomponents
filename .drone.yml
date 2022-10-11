@@ -39,13 +39,7 @@ steps:
   image: node
   depends_on: [ "Yarn Install" ]
   commands:
-  - yarn lint-source
-
-- name: Lint CSS
-  image: node
-  depends_on: [ "Yarn Install" ]
-  commands:
-  - yarn lint-css
+  - yarn lint
 
 - name: Build
   image: node
