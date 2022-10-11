@@ -5,7 +5,7 @@
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
   "typings": "lib/index.d.ts",
-  "repository": "https://github.com/OpenThingies/OpenComponents",
+  "repository": "https://git.openthingies.com/OpenThingies/components",
   "author": "The OpenThingies Team",
   "license": "MIT",
   "private": false,
