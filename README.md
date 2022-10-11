@@ -1,7 +1,7 @@
 <!--
 logo
 -->
-[![Open Components](https://raw.githubusercontent.com/OpenThingies/Assets/mistress/img/OpenComponents/opencomponentsfull.png)](https://github.com/OpenThingies/Components)
+[![Open Components](https://raw.githubusercontent.com/OpenThingies/Assets/mistress/img/OpenComponents/opencomponentsfull.png)](https://git.openthingies.com/OpenThingies/components)
 
 <!-- 
 badges
