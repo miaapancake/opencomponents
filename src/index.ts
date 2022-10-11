@@ -10,5 +10,3 @@ export { default as Form } from "./components/Form";
 export { default as FormSubmit } from "./components/FormSubmit";
 export { default as AccordionBody } from "./components/AccordionBody";
 export { default as DatePicker } from "./components/DatePicker";
-export { DateInput as DateInput } from "./components/DatePicker";
-export { RangeDateInput as RangeDateInput } from "./components/DatePicker";

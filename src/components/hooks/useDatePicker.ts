@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { DatePickerProps, RangeDatePickerProps } from "../DatePicker";
-import { chunkReducer, compareDate, getDaysInMonth, getWeekDay } from "../helpers";
+import { chunkReducer, compareDate, getDaysInMonth, getWeekDay, Maybe } from "../helpers";
 
 export function useDatePickerBase(startDate: Date) {
     const [viewMonth, setViewMonth] = useState<number>(startDate.getMonth());
@@ -16,7 +16,7 @@ export function useDatePickerBase(startDate: Date) {
         [viewYear, viewMonth]
     );
 
-    const dateChunks = useMemo(() => {
+    const dates = useMemo(() => {
         let prefixArray = [];
         let mainArray = [];
         const weekDay = getWeekDay(viewYear, viewMonth, 0);
@@ -30,7 +30,7 @@ export function useDatePickerBase(startDate: Date) {
         }
 
         // Chunk the dates into arrays of length 7
-        const chunked = [...prefixArray, ...mainArray].reduce(chunkReducer(7), []);
+        const chunked: Date[][] = [...prefixArray, ...mainArray].reduce(chunkReducer(7), []);
 
         // Fill the last chunk up to 7 items
         let i = 1;
@@ -38,11 +38,11 @@ export function useDatePickerBase(startDate: Date) {
             chunked[chunked.length - 1].push(new Date(viewYear, viewMonth + 1, i++));
         }
 
-        return chunked;
+        return chunked.flat();
     }, [viewYear, viewMonth, days, daysPrev]);
 
     return {
-        dateChunks,
+        dates,
         yearView,
         setYearView,
         viewYear,
@@ -62,7 +62,7 @@ export function useDatePicker(props: DatePickerProps) {
 }
 
 export function useRangeDatePicker(props: RangeDatePickerProps) {
-    const value: Date | [Date | undefined, Date | undefined] = useMemo(
+    const value: Date | [Maybe<Date>, Maybe<Date>] = useMemo(
         () => props.value ?? [undefined, undefined],
         [props.value]
     );

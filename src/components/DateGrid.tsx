@@ -1,56 +1,107 @@
+import styled, { CSSObject } from "@emotion/styled";
 import React from "react";
 
-import { classNames, compareDate, dayLetters } from "./helpers";
+import { useTheme } from "./contexts/ThemeContext";
+import { dayLetters, getDateStyle, Maybe } from "./helpers";
 
-export interface DateGridProps {
-    dates: Date[][];
-    value: Date | [Date, Date | undefined];
+export interface DateGridProps<T extends Date | [Maybe<Date>, Maybe<Date>]> {
+    dates: Date[];
+    value: T;
     month: number;
     onChange: (date: Date) => void;
 }
 
-export function DateGrid({ dates, value, month, onChange }: DateGridProps) {
+export const StyledDateGrid = styled.div<{ rows: number }>((props) => ({
+    display: "inline-grid",
+    width: "100%",
+    gridTemplateColumns: "repeat(7, 40px)",
+    gridTemplateRows: `repeat(${props.rows}, 40px)`,
+    justifyContent: "center",
+}));
+
+export const StyledDateGridCell = styled.div<{
+    header?: boolean;
+    value?: Date;
+    currentMonth?: number;
+    currentValue?: Date | [Maybe<Date>, Maybe<Date>];
+}>((props) => {
+    const theme = useTheme();
+    const style = getDateStyle(props.value, props.currentValue);
+    let stateStyle: CSSObject = {};
+
+    switch (style) {
+        case "none":
+            break;
+        case "rangePart":
+            stateStyle = {
+                backgroundColor: theme.primaryColorActive,
+            };
+            break;
+        case "rangeStart":
+            stateStyle = {
+                backgroundColor: theme.primaryColor,
+                borderTopLeftRadius: 5,
+                borderBottomLeftRadius: 5,
+            };
+            break;
+        case "rangeEnd":
+            stateStyle = {
+                backgroundColor: theme.primaryColor,
+                borderTopRightRadius: 5,
+                borderBottomRightRadius: 5,
+            };
+            break;
+        case "single":
+            stateStyle = {
+                backgroundColor: theme.primaryColor,
+                borderRadius: 5,
+            };
+            break;
+    }
+
+    return {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontFamily: theme.defaultFont,
+        color:
+            style !== "none"
+                ? theme.textPrimaryColorContrast
+                : props.value?.getMonth() !== props.currentMonth
+                ? theme.textSecondaryColor
+                : theme.textPrimaryColor,
+        cursor: "pointer",
+        textAlign: "center",
+        userSelect: "none",
+        fontWeight: props.header ? "bold" : "normal",
+        ...stateStyle,
+    };
+});
+
+export default function DateGrid<T extends Date | [Maybe<Date>, Maybe<Date>]>({
+    dates,
+    value,
+    month,
+    onChange,
+}: DateGridProps<T>) {
     return (
-        <div className="oc-header-row">
+        <StyledDateGrid rows={Math.ceil(dates.length / 7) + 1}>
             {dayLetters.map((day, i) => (
-                <div key={"oc-day-item-header-" + i + day} className="oc-date-item">
+                <StyledDateGridCell header={true} key={"oc-day-item-header-" + i + day}>
                     {day}
-                </div>
+                </StyledDateGridCell>
             ))}
-            {dates.map((row, i) => (
-                <div key={"date-row-" + i} className="oc-date-row">
-                    {row.map((date: Date, i) => (
-                        <div
-                            key={"date-item" + i + date.toString()}
-                            className={classNames(
-                                "oc-date-item",
-                                date !== undefined && "oc-enabled",
-                                !Array.isArray(value) && compareDate(date, value) && "oc-active",
-                                Array.isArray(value) &&
-                                    date > value[0] &&
-                                    date < value[1] &&
-                                    "oc-active-range",
-                                Array.isArray(value) &&
-                                    ((value[1] && compareDate(date, value[1])) ||
-                                        (!value[1] && compareDate(date, value[0]))) &&
-                                    "oc-active-end",
-                                Array.isArray(value) &&
-                                    (compareDate(date, value[0]) ||
-                                        (!value[0] && compareDate(date, value[1]))) &&
-                                    "oc-active-start",
-                                date.getMonth() != month && "oc-shadow"
-                            )}
-                            onClick={() => {
-                                if (date !== undefined) {
-                                    onChange(date);
-                                }
-                            }}
-                        >
-                            {date?.getDate()}
-                        </div>
-                    ))}
-                </div>
+            {dates.map((date, i) => (
+                <StyledDateGridCell
+                    key={"oc-day-item-date-" + i + date?.getDay()}
+                    currentMonth={month}
+                    onClick={() => onChange(date)}
+                    value={date}
+                    currentValue={value}
+                >
+                    {date?.getDate()}
+                </StyledDateGridCell>
             ))}
-        </div>
+        </StyledDateGrid>
     );
 }

@@ -1,7 +1,9 @@
 import React from "react";
 
+import { Maybe } from "../helpers";
+
 export interface DatePickerContextValue {
-    value?: Date | [Date | undefined, Date | undefined];
+    value?: Date | [Maybe<Date>, Maybe<Date>];
     yearView?: boolean;
     viewYear?: number;
     viewMonth?: number;

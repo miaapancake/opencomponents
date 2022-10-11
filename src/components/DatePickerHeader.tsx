@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import React, { useContext } from "react";
 
 import DownArrowIcon from "../icons/arrow-down-icon.svg";
@@ -5,26 +6,49 @@ import DownArrowIcon from "../icons/arrow-down-icon.svg";
 import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
 import DatePickerContext from "./contexts/DatePickerContext";
-import { classNames, monthWords } from "./helpers";
+import { useTheme } from "./contexts/ThemeContext";
+import { monthWords } from "./helpers";
 
-export interface DatePickerHeaderProps {
-    onNowClick: () => void;
-}
+const StyledDatePickerHeader = styled.div(() => ({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+}));
 
-export function DatePickerHeader({ onNowClick }: DatePickerHeaderProps) {
+const StyledDownArrowIcon = styled(DownArrowIcon)<{ open?: boolean }>(({ open }) => ({
+    position: "absolute",
+    marginLeft: 8,
+    width: 16,
+    height: 16,
+    transition: "ease-out 100ms",
+    transformOrigin: "center",
+    transform: open ? "rotate(180deg)" : "rotate(0deg)",
+}));
+
+const StyledYearSelect = styled.div(() => ({
+    paddingLeft: "10px",
+    display: "inline-block",
+    position: "relative",
+    userSelect: "none",
+    cursor: "pointer",
+    fontFamily: useTheme().defaultFont,
+}));
+
+const StyledMonthSelect = styled(StyledYearSelect)(() => ({}));
+
+export function DatePickerHeader() {
     const { setViewMonth, setViewYear, setYearView, viewMonth, viewYear, yearView } =
         useContext(DatePickerContext);
 
     return (
-        <div className="oc-datepicker-header">
-            <div
-                onClick={() => setYearView(!yearView)}
-                className={classNames("oc-year-picker", yearView && "oc-active")}
-            >
-                {monthWords[viewMonth]} {viewYear}
-                <DownArrowIcon />
-            </div>
-            <div className="oc-month-picker">
+        <StyledDatePickerHeader>
+            <StyledYearSelect onClick={() => setYearView(!yearView)}>
+                <span>
+                    {monthWords[viewMonth]} {viewYear}
+                </span>
+                <StyledDownArrowIcon open={yearView} />
+            </StyledYearSelect>
+            <StyledMonthSelect>
                 <ButtonGroup>
                     <Button
                         onClick={() => {
@@ -39,7 +63,6 @@ export function DatePickerHeader({ onNowClick }: DatePickerHeaderProps) {
                     <Button
                         onClick={() => {
                             const now = new Date();
-                            onNowClick();
                             setViewMonth(now.getMonth());
                             setViewYear(now.getFullYear());
                         }}
@@ -57,7 +80,7 @@ export function DatePickerHeader({ onNowClick }: DatePickerHeaderProps) {
                         &gt;
                     </Button>
                 </ButtonGroup>
-            </div>
-        </div>
+            </StyledMonthSelect>
+        </StyledDatePickerHeader>
     );
 }

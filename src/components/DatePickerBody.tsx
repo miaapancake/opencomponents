@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 
 import DatePickerContext from "./contexts/DatePickerContext";
-import { DateGrid } from "./DateGrid";
+import DateGrid from "./DateGrid";
 import { YearGrid } from "./YearGrid";
 
 export interface DatePickerBodyProps {
     onChangeDate: (date: Date) => void;
-    dates: Date[][];
+    dates: Date[];
 }
 
 export const DatePickerBody = ({ dates, onChangeDate }: DatePickerBodyProps) => {
@@ -14,7 +14,7 @@ export const DatePickerBody = ({ dates, onChangeDate }: DatePickerBodyProps) => 
         useContext(DatePickerContext);
 
     return (
-        <div className="oc-datepicker-body">
+        <div>
             {!yearView ? (
                 <DateGrid dates={dates} month={viewMonth} onChange={onChangeDate} value={value} />
             ) : (
