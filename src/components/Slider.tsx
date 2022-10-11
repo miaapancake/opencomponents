@@ -1,10 +1,10 @@
+import styled from "@emotion/styled";
 import React, { useEffect, useRef, useState } from "react";
 
 import SliderContext from "./contexts/SliderContext";
 import { ApplyInputFormContext } from "./helpers";
 import { RangeSliderHandle, SliderHandle } from "./SliderHandle";
-import { RangeSliderTrack, SliderTrack } from "./SliderTrack";
-
+import SliderTrack from "./SliderTrack";
 export interface SliderProps<T extends number | [number, number]> {
     value: T;
     min?: number;
@@ -14,6 +14,14 @@ export interface SliderProps<T extends number | [number, number]> {
     stepSize?: number | null;
 }
 
+const BaseSlider = styled.div({
+    display: "inline-block",
+    position: "relative",
+    width: "100%",
+    minHeight: 50,
+    userSelect: "none",
+});
+
 export interface SliderTrackMark {
     label?: string | ((value: number) => string);
     value: number;
@@ -22,13 +30,10 @@ export interface SliderTrackMark {
 const Slider: React.FC<SliderProps<number | [number, number]>> = <
     T extends number | [number, number]
 >({
-    value,
     onChange,
-    min,
-    max: maxValue,
-    trackMarks,
-    stepSize,
+    ...props
 }: SliderProps<T>) => {
+    const { value, min, max: maxValue, trackMarks, stepSize } = props;
     const [displayValue, setDisplayValue] = useState<number | [number, number]>(value);
     const rootRef = useRef<HTMLDivElement>();
 
@@ -37,7 +42,7 @@ const Slider: React.FC<SliderProps<number | [number, number]>> = <
     }, [value, setDisplayValue]);
 
     return (
-        <div className="oc-slider" ref={rootRef}>
+        <BaseSlider ref={rootRef}>
             <SliderContext.Provider
                 value={{
                     displayValue: displayValue,
@@ -50,20 +55,17 @@ const Slider: React.FC<SliderProps<number | [number, number]>> = <
                     stepSize: stepSize !== undefined ? stepSize : 1,
                 }}
             >
+                <SliderTrack />
                 {!Array.isArray(value) ? (
-                    <>
-                        <SliderTrack />
-                        <SliderHandle />
-                    </>
+                    <SliderHandle />
                 ) : (
                     <>
-                        <RangeSliderTrack />
                         <RangeSliderHandle index={0} />
                         <RangeSliderHandle index={1} />
                     </>
                 )}
             </SliderContext.Provider>
-        </div>
+        </BaseSlider>
     );
 };
 

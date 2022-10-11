@@ -3,9 +3,6 @@ import React, { useState } from "react";
 
 import Slider, { SliderProps } from "../Slider";
 
-import "../styles/Globals.scss";
-import "../styles/Slider.scss";
-
 export default {
     title: "OpenComponents/Components/Slider",
     component: Slider,
