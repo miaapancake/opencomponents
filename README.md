@@ -6,7 +6,7 @@ logo
 <!-- 
 badges
 -->
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/OpenThingies/Components/tree/mistress.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/OpenThingies/Components/tree/mistress)
+[![DroneCI](https://img.shields.io/drone/build/OpenThingies/components?label=CI&server=https://ci.openthingies.com&style=for-the-badge)](https://ci.openthingies.com/OpenThingies/components)
 
 <!--
 description
@@ -20,7 +20,7 @@ instructions
 -->
 ## Installation/Use
 
-1. First install the package with your preferred package manager
+1. Install the package with your preferred package manager
 
     Yarn:
     ```bash
@@ -30,20 +30,6 @@ instructions
     ```bash
     npm i opencomponents
     ```
-
-2. Then import the css file in the root of your react component tree (usually your App component):
-
-    ```jsx
-    import 'opencomponents/lib/style.css';
-
-    function App() {
-        // Your root component logic
-    }
-
-    export default App;
-    ```
-
-    now you should have everything set up to use.
 
 ## Development
 
