@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 import { useTheme } from "../contexts/ThemeContext";
 
 interface BoxProperties {
@@ -6,13 +7,18 @@ interface BoxProperties {
     rounded?: boolean;
     bordered?: boolean;
     shadow?: boolean;
+    center?: boolean;
+    flex?: boolean;
 }
 
-const Box = styled.div<BoxProperties>(({padding, rounded, bordered, shadow}) => {
-
+const Box = styled.div<BoxProperties>(({ padding, rounded, bordered, shadow, center, flex }) => {
     const theme = useTheme();
 
-    return ({
+    return {
+        display: center || flex ? "flex" : "block",
+        justifyContent: center ? "center" : undefined,
+        alignItems: center ? "center" : undefined,
+        flexDirection: center ? "column" : undefined,
         borderWidth: shadow || bordered ? 1 : 0,
         borderStyle: "solid",
         borderColor: theme.boxBorderColor,
@@ -20,9 +26,8 @@ const Box = styled.div<BoxProperties>(({padding, rounded, bordered, shadow}) => 
         borderRadius: rounded ? 5 * theme.roundingFactor : 0,
         fontFamily: theme.defaultFont,
         color: theme.textPrimaryColor,
-        boxShadow: shadow ? "4px 4px 5px rgba(0,0,0,.05)" : "none"
-    });
-
+        boxShadow: shadow ? "4px 4px 5px rgba(0,0,0,.05)" : "none",
+    };
 });
 
 export default Box;

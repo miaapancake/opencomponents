@@ -1,5 +1,6 @@
 import { ComponentMeta } from "@storybook/react";
 import React from "react";
+
 import Box from "../../primitives/Box";
 
 export default {
@@ -12,13 +13,75 @@ export default {
             </div>
         ),
     ],
-    argTypes: {},
+    argTypes: {
+        padding: {
+            name: "padding",
+            type: {
+                name: "intersection",
+                value: [
+                    {
+                        name: "number",
+                    },
+                    {
+                        name: "boolean",
+                    },
+                ],
+            },
+            description: `Adds by default 10px padding to the box,
+                can be set to a number to specify an amount of padding`,
+            defaultValue: false,
+        },
+        rounded: {
+            type: "boolean",
+            description: "Adds rounded corners to the box",
+        },
+        shadow: {
+            type: "boolean",
+            description: "Adds a shadow to the box",
+        },
+        bordered: {
+            type: "boolean",
+            description: "Adds a border to the box",
+        },
+        theme: {
+            table: {
+                disable: true,
+            },
+        },
+        as: {
+            table: {
+                disable: true,
+            },
+        },
+    },
 } as ComponentMeta<typeof Box>;
 
-export const standardBox = (args: any) => <Box>Hi I'm a box</Box>;
+const content = "Hi I'm Boxy";
 
-export const paddedRoundedBox = (args: any) => <Box padding rounded bordered>Hi I'm a box</Box>;
+export const standardBox = ({}: any) => <Box>{content}</Box>;
 
-export const valuePaddedRoundedBox = (args: any) => <Box padding={20} rounded bordered>Hi I'm a box</Box>;
+export const roundedBoxWithStandardPadding = ({}: any) => (
+    <Box padding rounded bordered>
+        {content}
+    </Box>
+);
 
-export const shadowBox = (args: any) => <Box padding rounded shadow>Hi I'm a box</Box>;
+export const roundedBoxWithCustomPadding = ({}: any) => (
+    <Box padding={20} rounded bordered>
+        {content}
+    </Box>
+);
+
+export const shadowBox = ({}: any) => (
+    <Box padding rounded shadow>
+        {content}
+    </Box>
+);
+
+export const centerBox = ({}: any) => (
+    <Box center padding bordered rounded style={{ minHeight: 400 }}>
+        <div>{content}</div>
+        <div>{content}</div>
+        <div>{content}</div>
+    </Box>
+);
