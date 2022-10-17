@@ -8,6 +8,7 @@ export interface Theme {
     textPrimaryColor: string;
     textSecondaryColor: string;
     textPrimaryColorContrast: string;
+    boxBorderColor: string;
     roundingFactor: number;
     defaultFont: string | string[];
 }
@@ -22,6 +23,7 @@ export const defaultTheme: Theme = {
     textPrimaryColor: "#222",
     textPrimaryColorContrast: "#fff",
     textSecondaryColor: "#ccc",
+    boxBorderColor: "#ddd",
     roundingFactor: 1,
     defaultFont: "sans-serif",
 };
