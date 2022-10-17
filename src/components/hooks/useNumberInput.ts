@@ -5,13 +5,17 @@ import { NumberInputProps } from "../NumberInput";
 
 export default function useNumberInput(props: NumberInputProps) {
     const { value } = props;
-    const [displayValue, setDisplayValue] = useState<string>(props.value.toString());
+    const [displayValue, setDisplayValue] = useState<string>(
+        props.value?.toLocaleString("fullwide", { useGrouping: false })
+    );
     const [min, max] = [props.min ?? Number.MIN_SAFE_INTEGER, props.max ?? Number.MAX_SAFE_INTEGER];
 
     const stepSize = props.stepSize ?? 1;
 
     useEffect(() => {
-        setDisplayValue(!value ? "0" : value.toString());
+        setDisplayValue(
+            value === undefined ? "0" : value.toLocaleString("fullwide", { useGrouping: false })
+        );
     }, [value]);
 
     const changeValue = useCallback(
@@ -22,14 +26,17 @@ export default function useNumberInput(props: NumberInputProps) {
             }
 
             // Set the display value
-            setDisplayValue(value);
-            const val = parseInt(value, 10);
+            let val = parseInt(value, 10);
 
+            setDisplayValue(value);
             // If the value is not a valid number do not update
             // the actual outer value
             if (isNaN(val)) {
                 return;
             }
+
+            val = clamp(val, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
+            setDisplayValue(val.toLocaleString("fullwide", { useGrouping: false }));
 
             props.onChange(val);
         },
@@ -39,7 +46,11 @@ export default function useNumberInput(props: NumberInputProps) {
     // Handle value increments and decrements
     const increment = useCallback(
         (amount) => {
-            const newVal = props.value + amount;
+            const newVal = clamp(
+                props.value + amount,
+                Number.MIN_SAFE_INTEGER,
+                Number.MAX_SAFE_INTEGER
+            );
             if (isNaN(newVal)) return;
             props.onChange(clamp(newVal, min, max));
             if (props.onBlur) props.onBlur(newVal);

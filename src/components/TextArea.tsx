@@ -1,12 +1,30 @@
+import styled from "@emotion/styled";
 import React, { Fragment, useCallback } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
 import { ApplyInputFormContext, classNames, InputProps } from "./helpers";
+import { StyledTextInput } from "./TextInput";
 
 export interface TextAreaProps extends InputProps<string> {
     maxLength?: number;
     minRows?: number;
+    placeholder?: string;
 }
+
+const StyledTextArea = styled(StyledTextInput)(() => {
+    return {
+        "& textarea": {
+            outline: "none",
+            border: "none",
+            padding: 15,
+            background: "none",
+            resize: "none",
+            width: "100%",
+            fontFamily: "inherit",
+            boxSizing: "border-box",
+        },
+    };
+});
 
 function TextArea(props: TextAreaProps) {
     const onChange = useCallback(
@@ -18,27 +36,8 @@ function TextArea(props: TextAreaProps) {
         [props]
     );
 
-    let color = undefined;
-
-    if (props.maxLength) {
-        const percentageOfMax = props.value.length / props.maxLength;
-        if (percentageOfMax >= 0.9) color = "#eb4d4b";
-        else if (percentageOfMax >= 0.8) color = "#f9ca24";
-        else color = undefined;
-    }
-
     return (
-        <div
-            className={classNames(
-                "oc-text-input",
-                "oc-text-area",
-                "oc-input",
-                props.maxLength && " oc-limited",
-                props.className,
-                props.error && "oc-error"
-            )}
-            style={{ ...props.style }}
-        >
+        <StyledTextArea rounded className={classNames(props.className)} style={{ ...props.style }}>
             <ReactTextareaAutosize
                 minRows={props.minRows ?? 3}
                 name={props.name}
@@ -46,16 +45,10 @@ function TextArea(props: TextAreaProps) {
                 onChange={(e) => onChange(e.target.value)}
                 value={props.value}
                 onBlur={() => props.onBlur?.call(this)}
+                placeholder={props.placeholder}
             />
-            {props.maxLength && props.value.length ? (
-                <div style={{ backgroundColor: color }} className="oc-area-counter">
-                    {props.maxLength - props.value.length}
-                </div>
-            ) : (
-                <Fragment />
-            )}
             {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
-        </div>
+        </StyledTextArea>
     );
 }
 
