@@ -9,7 +9,7 @@ import Box from "./primitives/Box";
 export interface TextInputProps extends InputProps<string> {
     type?: "text" | "email" | "password";
     maxLength?: number;
-    innerRef?: React.RefCallback<HTMLInputElement>;
+    innerRef?: React.Ref<HTMLInputElement>;
     placeholder?: string;
 }
 

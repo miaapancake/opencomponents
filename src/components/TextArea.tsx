@@ -9,6 +9,7 @@ export interface TextAreaProps extends InputProps<string> {
     maxLength?: number;
     minRows?: number;
     placeholder?: string;
+    innerRef?: React.Ref<HTMLTextAreaElement>;
 }
 
 const StyledTextArea = styled(StyledTextInput)(() => {
@@ -39,6 +40,7 @@ function TextArea(props: TextAreaProps) {
     return (
         <StyledTextArea rounded className={classNames(props.className)} style={{ ...props.style }}>
             <ReactTextareaAutosize
+                ref={props.innerRef}
                 minRows={props.minRows ?? 3}
                 name={props.name}
                 maxLength={props.maxLength}
