@@ -30,6 +30,9 @@ export const chunkReducer = (chunkSize: number) => (resultArray, item, index) =>
     return resultArray;
 };
 
+export const toTitle = (str: string) =>
+    (str.substring(0, 1).toUpperCase() + str.substring(1)).replace("_", " ");
+
 /**
  * Month numbers mapped to words
  */
