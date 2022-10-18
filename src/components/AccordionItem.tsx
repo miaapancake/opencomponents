@@ -1,22 +1,22 @@
 import React, { PropsWithChildren, useMemo } from "react";
 
-import { AccordionId } from "./contexts/AccordionContext";
+import { AccordionEventKey } from "./contexts/AccordionContext";
 import AccordionItemContext, { AccordionItemContextValue } from "./contexts/AccordionItemContext";
 
 interface AccordionItemProps {
-    id: AccordionId;
+    eventKey: AccordionEventKey;
 }
 
 export default function AccordionItem(props: PropsWithChildren<AccordionItemProps>) {
     const contextValue = useMemo<AccordionItemContextValue>(
         () => ({
-            id: props.id,
+            eventKey: props.eventKey,
         }),
-        [props.id]
+        [props.eventKey]
     );
 
     return (
-        <div key={props.id} className="oc-accordion-item">
+        <div key={props.eventKey} className="oc-accordion-item">
             <AccordionItemContext.Provider value={contextValue}>
                 {props.children}
             </AccordionItemContext.Provider>

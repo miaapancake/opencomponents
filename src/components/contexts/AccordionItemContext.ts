@@ -1,9 +1,9 @@
 import React from "react";
 
-import { AccordionId } from "./AccordionContext";
+import { AccordionEventKey } from "./AccordionContext";
 
 export interface AccordionItemContextValue {
-    id?: AccordionId;
+    eventKey?: AccordionEventKey;
 }
 
 const context = React.createContext<AccordionItemContextValue>({});
