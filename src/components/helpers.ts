@@ -3,6 +3,8 @@ import React, { CSSProperties, useContext } from "react";
 
 import FormContext from "./contexts/FormContext";
 
+export type Maybe<T> = T | undefined;
+
 export interface InputProps<ValueType> extends ComponentBase {
     value?: ValueType;
     onChange?: (value: ValueType) => void;
@@ -85,6 +87,26 @@ export function compareDate(date: Date, date2: Date) {
         date.getMonth() == date2.getMonth() &&
         date.getFullYear() == date2.getFullYear()
     );
+}
+
+export function getDateStyle(
+    date: Date,
+    range: Date | [Date, Date | undefined]
+): "single" | "rangeStart" | "rangePart" | "rangeEnd" | "none" {
+    if (date === undefined || range === undefined) return "none";
+    if (!Array.isArray(range)) {
+        return compareDate(date, range) ? "single" : "none";
+    } else {
+        const [start, end] = range;
+
+        if (compareDate(date, start) && end === undefined) return "single";
+        if (compareDate(date, end) && start === undefined) return "single";
+        if (compareDate(date, start)) return "rangeStart";
+        if (compareDate(date, end)) return "rangeEnd";
+        if (date > start && date < end) return "rangePart";
+
+        return "none";
+    }
 }
 
 /**

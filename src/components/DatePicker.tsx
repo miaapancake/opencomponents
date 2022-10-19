@@ -1,29 +1,24 @@
-import { useClickOutside } from "@openthingies/hooks";
-import React, { Fragment, useState } from "react";
-import { usePopper } from "react-popper";
+import styled from "@emotion/styled";
+import React from "react";
 
 import DatePickerContext from "./contexts/DatePickerContext";
 import { DatePickerBody } from "./DatePickerBody";
 import { DatePickerHeader } from "./DatePickerHeader";
-import { ApplyInputFormContext, classNames, compareDate, InputProps } from "./helpers";
+import { ApplyInputFormContext, compareDate, InputProps, Maybe } from "./helpers";
 import { useDatePicker, useRangeDatePicker } from "./hooks/useDatePicker";
 
-export type DatePickerProps = InputProps<Date | undefined>;
+const StyledDatePicker = styled.div({
+    maxWidth: 280,
+});
+
+export type DatePickerProps = InputProps<Maybe<Date>>;
 
 function DatePicker(props: DatePickerProps) {
-    const {
-        value,
-        dateChunks,
-        setViewMonth,
-        setViewYear,
-        setYearView,
-        viewMonth,
-        viewYear,
-        yearView,
-    } = useDatePicker(props);
+    const { value, dates, setViewMonth, setViewYear, setYearView, viewMonth, viewYear, yearView } =
+        useDatePicker(props);
 
     return (
-        <div className={classNames("oc-datepicker oc-input")}>
+        <StyledDatePicker>
             <DatePickerContext.Provider
                 value={{
                     setViewMonth,
@@ -35,9 +30,9 @@ function DatePicker(props: DatePickerProps) {
                     viewYear,
                 }}
             >
-                <DatePickerHeader onNowClick={() => props.onChange(new Date())} />
+                <DatePickerHeader />
                 <DatePickerBody
-                    dates={dateChunks}
+                    dates={dates}
                     onChangeDate={(date) => {
                         props.onChange(compareDate(date, value) ? undefined : date);
                         setViewMonth(date.getMonth());
@@ -45,16 +40,16 @@ function DatePicker(props: DatePickerProps) {
                     }}
                 />
             </DatePickerContext.Provider>
-        </div>
+        </StyledDatePicker>
     );
 }
 
-export type RangeDatePickerProps = InputProps<[Date | undefined, Date | undefined]>;
+export type RangeDatePickerProps = InputProps<[Maybe<Date>, Maybe<Date>]>;
 
 function RangeDatePicker(props: RangeDatePickerProps) {
     const {
         value,
-        dateChunks,
+        dates,
         setViewMonth,
         setViewYear,
         setYearView,
@@ -65,7 +60,7 @@ function RangeDatePicker(props: RangeDatePickerProps) {
     } = useRangeDatePicker(props);
 
     return (
-        <div className={classNames("oc-datepicker oc-input")}>
+        <StyledDatePicker>
             <DatePickerContext.Provider
                 value={{
                     setViewMonth,
@@ -77,70 +72,15 @@ function RangeDatePicker(props: RangeDatePickerProps) {
                     value,
                 }}
             >
-                <DatePickerHeader
-                    onNowClick={() => {
-                        const nowDate = new Date();
-                        props.onChange([nowDate, new Date(nowDate.setDate(nowDate.getDate() + 1))]);
-                    }}
-                />
-                <DatePickerBody dates={dateChunks} onChangeDate={modifyDateRange} />
+                <DatePickerHeader />
+                <DatePickerBody dates={dates} onChangeDate={modifyDateRange} />
             </DatePickerContext.Provider>
-        </div>
+        </StyledDatePicker>
     );
 }
 
-const InputBase = <T extends InputProps<any>>(
-    component: React.FunctionComponent<T>
-): React.FunctionComponent<T> =>
-    Object.assign(
-        (props: T) => {
-            /* eslint-disable react-hooks/rules-of-hooks */
-            const [referenceElement, setReferenceElement] = useState<any>(null);
-            const [popperElement, setPopperElement] = useState<any>(null);
-            const [visible, setVisible] = useState<boolean>(false);
-            const clickOutsideRef = useClickOutside(() => setVisible(false));
-
-            // Initialize PopperJS with a 5px vertical offset
-            const {
-                attributes,
-                styles: { popper: popstyles },
-            } = usePopper(referenceElement, popperElement, {
-                modifiers: [{ name: "offset", options: { offset: [0, 5] } }],
-            });
-            /* eslint-enable react-hooks/rules-of-hooks */
-
-            return (
-                <div ref={clickOutsideRef} className={classNames("oc-input", "oc-date-input")}>
-                    {visible ? (
-                        <div
-                            ref={setPopperElement}
-                            {...attributes}
-                            style={popstyles}
-                            className="oc-date-input-popup"
-                        >
-                            {component(props)}
-                        </div>
-                    ) : (
-                        <Fragment />
-                    )}
-                    <input
-                        onClick={() => setVisible(!visible)}
-                        ref={setReferenceElement}
-                        type="text"
-                        value={props.value?.toDateString() ?? ""}
-                        placeholder="Please select a date"
-                    />
-                </div>
-            );
-        },
-        {
-            displayName: component.displayName,
-            defaultProps: component.defaultProps,
-        }
-    );
-
-export const DateInput = ApplyInputFormContext(InputBase(DatePicker));
-export const RangeDateInput = ApplyInputFormContext(InputBase(RangeDatePicker));
+// TODO: Add input components for datepickers:
+// https://git.openthingies.com/OpenThingies/components/issues/20
 
 export default Object.assign(ApplyInputFormContext(DatePicker), {
     displayName: "DatePicker",
