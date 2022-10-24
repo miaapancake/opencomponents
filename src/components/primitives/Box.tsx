@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 import { useTheme } from "../contexts/ThemeContext";
 
-interface BoxProperties {
+export interface BoxProperties {
     padding?: boolean | number;
     rounded?: boolean;
     bordered?: boolean;
