@@ -3,8 +3,6 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 
 import { ApplyInputFormContext, classNames, InputProps } from "./helpers";
 
-import "./styles/Input.scss";
-
 export interface TextAreaProps extends InputProps<string> {
     maxLength?: number;
     minRows?: number;
