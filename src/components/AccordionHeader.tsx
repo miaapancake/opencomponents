@@ -1,24 +1,28 @@
-import React, { CSSProperties, useContext, useMemo } from "react";
+import styled from "@emotion/styled";
+import React, { useContext } from "react";
 
 import AccordionContext from "./contexts/AccordionContext";
 import AccordionItemContext from "./contexts/AccordionItemContext";
-import { PropsWithChildren, valueIn, toggleOrSetValue } from "./helpers";
+import { toggleOrSetValue, PropsWithAnyChildren, ComponentBase } from "./helpers";
+import Box from "./primitives/Box";
 
-interface AccordionHeaderProps {
-    style?: CSSProperties;
-}
+type AccordionHeaderProps = ComponentBase;
 
-export default function AccordionHeader(props: PropsWithChildren<AccordionHeaderProps, any>) {
+const StyledAccordionHeader = styled(Box)({
+    userSelect: "none",
+    cursor: "pointer",
+});
+
+export default function AccordionHeader(props: PropsWithAnyChildren<AccordionHeaderProps, any>) {
     const { selected, onSelect } = useContext(AccordionContext);
-    const { id } = useContext(AccordionItemContext);
-
-    const isSelected = useMemo(() => valueIn(id, selected), [selected, id]);
+    const { eventKey } = useContext(AccordionItemContext);
 
     return (
-        <div
+        <StyledAccordionHeader
+            padding={20}
+            rounded
             {...props}
-            onClick={() => onSelect(toggleOrSetValue(id, selected))}
-            className={"oc-accordion-item-header" + (isSelected ? " oc-selected" : "")}
+            onClick={() => onSelect(toggleOrSetValue(eventKey, selected))}
         />
     );
 }

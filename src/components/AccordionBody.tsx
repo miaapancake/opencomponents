@@ -1,23 +1,36 @@
-import React, { CSSProperties, useContext, useMemo } from "react";
+import styled from "@emotion/styled";
+import React, { useContext, useMemo, useRef } from "react";
 
 import AccordionContext from "./contexts/AccordionContext";
 import AccordionItemContext from "./contexts/AccordionItemContext";
-import { classNames, PropsWithChildren, valueIn } from "./helpers";
+import { ComponentBase, PropsWithAnyChildren, valueIn } from "./helpers";
+import Box from "./primitives/Box";
 
-interface AccordionBodyProps {
-    style?: CSSProperties;
-}
+type AccordionBodyProps = ComponentBase;
 
-export default function AccordionBody(props: PropsWithChildren<AccordionBodyProps, any>) {
+const StyledAccordionBody = styled(Box)({
+    overflow: "hidden",
+    transition: "max-height 200ms ease-out",
+});
+
+export default function AccordionBody({
+    children,
+    ...props
+}: PropsWithAnyChildren<AccordionBodyProps, any>) {
     const { selected } = useContext(AccordionContext);
-    const { id } = useContext(AccordionItemContext);
+    const { eventKey: id } = useContext(AccordionItemContext);
+    const contentContainer = useRef<HTMLDivElement>();
 
     const isSelected = useMemo(() => valueIn(id, selected), [selected, id]);
 
     return (
-        <div
-            className={classNames("oc-accordion-item-body", isSelected && "oc-selected")}
+        <StyledAccordionBody
+            style={{
+                maxHeight: isSelected ? contentContainer.current.getBoundingClientRect().height : 0,
+            }}
             {...props}
-        />
+        >
+            <div ref={contentContainer}>{children}</div>
+        </StyledAccordionBody>
     );
 }

@@ -1,27 +1,28 @@
+import styled from "@emotion/styled";
 import React, { CSSProperties, useMemo } from "react";
 import { useUncontrolled } from "uncontrollable";
 
 import AccordionBody from "./AccordionBody";
 import AccordionHeader from "./AccordionHeader";
 import AccordionItem from "./AccordionItem";
-import AccordionContext, { AccordionId } from "./contexts/AccordionContext";
+import AccordionContext, { AccordionEventKey } from "./contexts/AccordionContext";
 import { PropsWithChildren } from "./helpers";
+import Box from "./primitives/Box";
 
-interface AccordionProps {
-    defaultSelected?: AccordionId | AccordionId[];
-    onSelect?: (value: AccordionId | AccordionId[]) => void;
-    selected?: AccordionId | AccordionId[];
-    alwaysOpen?: boolean;
+export interface AccordionProps {
+    defaultSelected?: AccordionEventKey | AccordionEventKey[];
+    onSelect?: (value: AccordionEventKey | AccordionEventKey[]) => void;
+    selected?: AccordionEventKey | AccordionEventKey[];
     style?: CSSProperties;
 }
 
+const StyledAccordion = styled(Box)({
+    width: "100%",
+});
+
 //Hi Jotti
 function Accordion(props: PropsWithChildren<AccordionProps>) {
-    const {
-        selected = props.defaultSelected,
-        onSelect,
-        alwaysOpen,
-    } = useUncontrolled(props, {
+    const { selected = props.defaultSelected, onSelect } = useUncontrolled(props, {
         selected: "onSelect",
     });
 
@@ -29,17 +30,16 @@ function Accordion(props: PropsWithChildren<AccordionProps>) {
         () => ({
             selected,
             onSelect,
-            alwaysOpen,
         }),
-        [selected, onSelect, alwaysOpen]
+        [selected, onSelect]
     );
 
     return (
-        <div className="oc-accordion" style={props.style}>
+        <StyledAccordion bordered rounded style={props.style}>
             <AccordionContext.Provider value={contextValue}>
                 {props.children}
             </AccordionContext.Provider>
-        </div>
+        </StyledAccordion>
     );
 }
 

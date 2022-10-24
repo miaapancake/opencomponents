@@ -1,11 +1,10 @@
 import React from "react";
 
-export type AccordionId = string | number;
+export type AccordionEventKey = string | number;
 
 export interface AccordionContextValue {
-    selected?: AccordionId | AccordionId[];
-    onSelect?: (value: AccordionId | AccordionId[]) => void;
-    alwaysOpen?: boolean;
+    selected?: AccordionEventKey | AccordionEventKey[];
+    onSelect?: (value: AccordionEventKey | AccordionEventKey[]) => void;
 }
 
 const context = React.createContext<AccordionContextValue>({});
