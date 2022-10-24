@@ -4,7 +4,7 @@ import { usePopper } from "react-popper";
 
 import { SelectContextValue } from "../contexts/SelectContext";
 import { modulo, PropsWithChildren, toggleOrSetValue, valueIn } from "../helpers";
-import { SelectProps } from "../Select";
+import { InputProps, SelectProps } from "../Select";
 import { SelectItemProps } from "../SelectItem";
 
 export default function useSelect({
@@ -12,7 +12,7 @@ export default function useSelect({
     value,
     children,
     onBlur,
-}: PropsWithChildren<SelectProps, SelectItemProps>) {
+}: PropsWithChildren<SelectProps, SelectItemProps> & InputProps) {
     const [visible, _setVisible] = useState<boolean>(false);
     const [query, setQuery] = useState<string>("");
     const [activeQueryItem, setActiveQueryItem] = useState<number | undefined>(undefined);
@@ -72,12 +72,19 @@ export default function useSelect({
 
             let newQuery, up, len;
             switch (e.key) {
+                case "Tab":
+                case "Escape":
+                    referenceElement.blur();
+                    setVisible(false);
+                    break;
                 case "Enter":
                     // When pressing enter toggle or set the
                     // currently selected item in the dropdown menu
 
                     if (queryItems[activeQueryItem]) {
-                        onChange(toggleOrSetValue(queryItems[activeQueryItem].value, value));
+                        (onChange as any)(
+                            toggleOrSetValue(queryItems[activeQueryItem].value, value)
+                        );
                         setQuery("");
                     }
 
@@ -105,7 +112,17 @@ export default function useSelect({
                     break;
             }
         },
-        [activeQueryItem, onChange, queryItems, value, setActiveQueryItem, setQuery, visible]
+        [
+            activeQueryItem,
+            onChange,
+            queryItems,
+            value,
+            setActiveQueryItem,
+            setQuery,
+            visible,
+            referenceElement,
+            setVisible,
+        ]
     );
 
     useKeyPress(onKeyDown);

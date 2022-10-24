@@ -191,10 +191,10 @@ export const includesCaseInsensitive = (array: (string | number)[], val: string 
  *
  * @returns The new modified state
  */
-export const toggleOrSetValue = (
-    newValue: string | number,
-    value: string | number | (string | number)[]
-) => {
+export const toggleOrSetValue = <T extends string | number>(
+    newValue: T,
+    value: T | T[]
+): T | T[] => {
     const val = Array.isArray(value) ? [...value] : value;
 
     if (Array.isArray(val) && includesCaseInsensitive(val, newValue)) {
