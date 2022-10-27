@@ -222,10 +222,7 @@ export const toggleOrSetValue = <T extends string | number>(
  *
  * @returns The new modified state
  */
-export const addOrSetValue = (
-    newValue: string | number,
-    value: string | number | (string | number)[]
-) => {
+export const addOrSetValue = <T extends string | number>(newValue: T, value: T | T[]) => {
     const val = Array.isArray(value) ? [...value] : value;
 
     if (Array.isArray(val) && !includesCaseInsensitive(val, newValue)) {
