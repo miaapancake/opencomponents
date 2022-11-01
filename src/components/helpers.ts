@@ -5,6 +5,8 @@ import FormContext from "./contexts/FormContext";
 
 export type Maybe<T> = T | undefined;
 
+export type EventKey = string | number;
+
 export interface InputProps<ValueType> extends ComponentBase {
     value?: ValueType;
     onChange?: (value: ValueType) => void;
