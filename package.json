@@ -62,7 +62,7 @@
     "@emotion/styled": "^11.10.4",
     "@openthingies/hooks": "^0.1.1-2",
     "@popperjs/core": "^2.11.5",
-    "buffer": "^6.0.3",
+    "filesize": "^10.0.5",
     "joi": "^17.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
