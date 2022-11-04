@@ -288,3 +288,7 @@ export type PropsWithAnyChildren<PropsType, ChildPropsType = any> = PropsType & 
 export type PropsWithChild<PropsType, ChildPropsType = any> = PropsType & {
     children: React.ReactElement<ChildPropsType>;
 };
+
+export type PropsWithChildOfType<PropsType, Type> = PropsType & {
+    children: Type;
+};
