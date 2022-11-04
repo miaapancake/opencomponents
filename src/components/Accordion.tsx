@@ -5,14 +5,14 @@ import { useUncontrolled } from "uncontrollable";
 import AccordionBody from "./AccordionBody";
 import AccordionHeader from "./AccordionHeader";
 import AccordionItem from "./AccordionItem";
-import AccordionContext, { AccordionEventKey } from "./contexts/AccordionContext";
-import { PropsWithChildren } from "./helpers";
+import AccordionContext from "./contexts/AccordionContext";
+import { EventKey, PropsWithChildren } from "./helpers";
 import Box from "./primitives/Box";
 
 export interface AccordionProps {
-    defaultSelected?: AccordionEventKey | AccordionEventKey[];
-    onSelect?: (value: AccordionEventKey | AccordionEventKey[]) => void;
-    selected?: AccordionEventKey | AccordionEventKey[];
+    defaultSelected?: EventKey | EventKey[];
+    onSelect?: (value: EventKey | EventKey[]) => void;
+    selected?: EventKey | EventKey[];
     style?: CSSProperties;
 }
 

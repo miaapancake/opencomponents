@@ -1,13 +1,20 @@
 import styled from "@emotion/styled";
 import React, { useContext } from "react";
 
-import ButtonGroupContext, { ButtonId } from "./contexts/ButtonGroupContext";
+import ButtonGroupContext from "./contexts/ButtonGroupContext";
 import { useTheme } from "./contexts/ThemeContext";
-import { addOrSetValue, classNames, ComponentBase, PropsWithAnyChildren, valueIn } from "./helpers";
+import {
+    addOrSetValue,
+    classNames,
+    ComponentBase,
+    EventKey,
+    PropsWithAnyChildren,
+    valueIn,
+} from "./helpers";
 
 export interface ButtonProps extends ComponentBase {
     onClick?: () => void;
-    eventKey?: ButtonId;
+    eventKey?: EventKey;
     buttonStyle?: "primary" | "flat" | "secondary";
 }
 

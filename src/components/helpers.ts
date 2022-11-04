@@ -1,16 +1,23 @@
 import Joi from "joi";
-import React, { CSSProperties, useContext } from "react";
-
-import FormContext from "./contexts/FormContext";
+import React, { CSSProperties } from "react";
 
 export type Maybe<T> = T | undefined;
 
 export type EventKey = string | number;
 
-export interface InputProps<ValueType> extends ComponentBase {
+export interface OptionalInputProps<ValueType> extends ComponentBase {
     value?: ValueType;
     onChange?: (value: ValueType) => void;
-    onBlur?: (value?: string | number) => void;
+    onBlur?: (value?: EventKey) => void;
+    name?: string;
+    validation?: Joi.Schema;
+    error?: string;
+}
+
+export interface InputProps<ValueType> extends ComponentBase {
+    value: ValueType;
+    onChange: (value: ValueType) => void;
+    onBlur?: (value?: EventKey) => void;
     name?: string;
     validation?: Joi.Schema;
     error?: string;
@@ -142,38 +149,11 @@ export const compareMime = (a: string, b: string) => {
 };
 
 /**
- * Applies the register function to the component if it is within a form context
- * @param component the component to apply the form context to
- * @param defaultValue the default value of this component within the form
- * @returns the new component that respects the form context
- */
-export const ApplyInputFormContext = <T extends InputProps<any>>(
-    component: React.FunctionComponent<T>,
-    defaultValue?: string | number
-): React.FunctionComponent<T> => {
-    return Object.assign(function InputComponent(props: T) {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const { register } = useContext(FormContext);
-        if (register && props.name)
-            return component({
-                ...props,
-                ...register(
-                    props.name,
-                    component.name,
-                    props.validation?.label(props.name) ?? undefined,
-                    defaultValue
-                ),
-            });
-        else return component(props);
-    }, component);
-};
-
-/**
  * Converts an object to uppercase only if it is a string otherwise leaves it untouched
  * @param item The item to selectively convert to upperCase
  * @returns The selectively uppercased item
  */
-export const selectiveToUpper = (item: string | number) => {
+export const selectiveToUpper = (item: EventKey) => {
     return typeof item === "string" ? item.toUpperCase() : item;
 };
 
@@ -183,7 +163,7 @@ export const selectiveToUpper = (item: string | number) => {
  * @param val The item to search for
  * @returns True if the item has been found, False if the item has not been found
  */
-export const includesCaseInsensitive = (array: (string | number)[], val: string | number) => {
+export const includesCaseInsensitive = (array: EventKey[], val: EventKey) => {
     return array.map(selectiveToUpper).includes(selectiveToUpper(val));
 };
 
@@ -196,10 +176,7 @@ export const includesCaseInsensitive = (array: (string | number)[], val: string 
  *
  * @returns The new modified state
  */
-export const toggleOrSetValue = <T extends string | number>(
-    newValue: T,
-    value: T | T[]
-): T | T[] => {
+export const toggleOrSetValue = <T extends EventKey>(newValue: T, value: T | T[]): T | T[] => {
     const val = Array.isArray(value) ? [...value] : value;
 
     if (Array.isArray(val) && includesCaseInsensitive(val, newValue)) {
@@ -222,7 +199,7 @@ export const toggleOrSetValue = <T extends string | number>(
  *
  * @returns The new modified state
  */
-export const addOrSetValue = <T extends string | number>(newValue: T, value: T | T[]) => {
+export const addOrSetValue = <T extends EventKey>(newValue: T, value: T | T[]) => {
     const val = Array.isArray(value) ? [...value] : value;
 
     if (Array.isArray(val) && !includesCaseInsensitive(val, newValue)) {
@@ -240,7 +217,7 @@ export const addOrSetValue = <T extends string | number>(newValue: T, value: T |
  * @param b second value
  * @returns the direction to move the current item in
  */
-export const defaultSort = <T extends string | number | boolean>(a: T, b: T) => {
+export const defaultSort = <T extends EventKey | boolean>(a: T, b: T) => {
     switch (typeof a) {
         case "string":
             return a.localeCompare(b.toString());
@@ -270,7 +247,7 @@ export const modulo = (n: number, max: number) => ((n % max) + max) % max;
  * @returns a boolean that is true if value contains or is equal to current
  *
  */
-export const valueIn = (current: string | number, value: string | number | (string | number)[]) => {
+export const valueIn = (current: EventKey, value: EventKey | EventKey[]) => {
     if (current === undefined || value === undefined) return false;
     return Array.isArray(value) ? value.includes(current) : value === current;
 };

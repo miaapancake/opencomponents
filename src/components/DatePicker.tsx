@@ -4,7 +4,7 @@ import React from "react";
 import DatePickerContext from "./contexts/DatePickerContext";
 import { DatePickerBody } from "./DatePickerBody";
 import { DatePickerHeader } from "./DatePickerHeader";
-import { ApplyInputFormContext, compareDate, InputProps, Maybe } from "./helpers";
+import { compareDate, InputProps, Maybe } from "./helpers";
 import { useDatePicker, useRangeDatePicker } from "./hooks/useDatePicker";
 
 const StyledDatePicker = styled.div({
@@ -82,9 +82,7 @@ function RangeDatePicker(props: RangeDatePickerProps) {
 // TODO: Add input components for datepickers:
 // https://git.openthingies.com/OpenThingies/components/issues/20
 
-export default Object.assign(ApplyInputFormContext(DatePicker), {
+export default Object.assign(DatePicker, {
     displayName: "DatePicker",
-    Range: ApplyInputFormContext(
-        Object.assign(RangeDatePicker, { displayName: "DatePicker.Range" })
-    ),
+    Range: Object.assign(RangeDatePicker, { displayName: "DatePicker.Range" }),
 });

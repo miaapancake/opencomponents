@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, useMemo } from "react";
 
-import { AccordionEventKey } from "./contexts/AccordionContext";
 import AccordionItemContext, { AccordionItemContextValue } from "./contexts/AccordionItemContext";
+import { EventKey } from "./helpers";
 
 interface AccordionItemProps {
-    eventKey: AccordionEventKey;
+    eventKey: EventKey;
 }
 
 export default function AccordionItem(props: PropsWithChildren<AccordionItemProps>) {

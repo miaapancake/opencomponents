@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import React, { useEffect, useRef, useState } from "react";
 
 import SliderContext from "./contexts/SliderContext";
-import { ApplyInputFormContext } from "./helpers";
 import { RangeSliderHandle, SliderHandle } from "./SliderHandle";
 import SliderTrack from "./SliderTrack";
 export interface SliderProps<T extends number | [number, number]> {
@@ -69,4 +68,4 @@ const Slider: React.FC<SliderProps<number | [number, number]>> = <
     );
 };
 
-export default ApplyInputFormContext<SliderProps<number | [number, number]>>(Slider);
+export default Slider;

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 
-import { ApplyInputFormContext, classNames, InputProps } from "./helpers";
+import { classNames, InputProps } from "./helpers";
 import useNumberInput from "./hooks/useNumberInput";
 import Box from "./primitives/Box";
 import { StyledInput as StyledInputBase, StyledTextInput } from "./TextInput";
@@ -63,4 +63,4 @@ const NumberInput = (props: NumberInputProps) => {
     );
 };
 
-export default ApplyInputFormContext(NumberInput, 0);
+export default NumberInput;

@@ -1,10 +1,10 @@
 import React from "react";
 
-export type ButtonId = string | number;
+import { EventKey } from "../helpers";
 
 export interface ButtonGroupContextValue {
-    selected?: ButtonId | ButtonId[];
-    onSelect?: (value: ButtonId | ButtonId[]) => void;
+    selected?: EventKey | EventKey[];
+    onSelect?: (value: EventKey | EventKey[]) => void;
 }
 
 const context = React.createContext<ButtonGroupContextValue>({});

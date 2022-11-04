@@ -2,19 +2,24 @@ import styled from "@emotion/styled";
 import React, { useMemo } from "react";
 
 import { ButtonProps } from "./Button";
-import ButtonGroupContext, {
-    ButtonGroupContextValue,
-    ButtonId,
-} from "./contexts/ButtonGroupContext";
+import ButtonGroupContext, { ButtonGroupContextValue } from "./contexts/ButtonGroupContext";
 import { useTheme } from "./contexts/ThemeContext";
-import { classNames, ComponentBase, PropsWithChildren } from "./helpers";
+import {
+    classNames,
+    ComponentBase,
+    OptionalInputProps as BaseInputProps,
+    PropsWithChildren,
+} from "./helpers";
 
-export interface ButtonGroupProps<T extends ButtonId | ButtonId[]> extends ComponentBase {
-    onSelect?: (id: T) => void;
-    selected?: T;
-}
+type InputProps =
+    | BaseInputProps<string>
+    | BaseInputProps<number>
+    | BaseInputProps<string[]>
+    | BaseInputProps<number[]>;
 
-const BaseButtonGroup = styled.div(() => {
+export type ButtonGroupProps = ComponentBase;
+
+const StyledButtonGroup = styled.div(() => {
     const theme = useTheme();
     return {
         margin: "10px auto",
@@ -32,26 +37,26 @@ const BaseButtonGroup = styled.div(() => {
     };
 });
 
-export default function ButtonGroup<T extends ButtonId | ButtonId[]>({
+export default function ButtonGroup({
     style,
     className,
-    onSelect,
-    selected,
+    onChange,
+    value,
     ...props
-}: PropsWithChildren<ButtonGroupProps<T>, ButtonProps>) {
+}: PropsWithChildren<ButtonGroupProps, ButtonProps> & InputProps) {
     const contextValue = useMemo<ButtonGroupContextValue>(
         () => ({
-            onSelect,
-            selected,
+            onSelect: onChange,
+            selected: value,
         }),
-        [selected, onSelect]
+        [value, onChange]
     );
 
     return (
-        <BaseButtonGroup style={style} className={classNames(className)}>
+        <StyledButtonGroup style={style} className={classNames(className)}>
             <ButtonGroupContext.Provider value={contextValue}>
                 {props.children}
             </ButtonGroupContext.Provider>
-        </BaseButtonGroup>
+        </StyledButtonGroup>
     );
 }

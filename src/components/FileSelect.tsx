@@ -6,7 +6,7 @@ import UploadIcon from "../icons/upload-icon.svg";
 
 import Button from "./Button";
 import { useTheme } from "./contexts/ThemeContext";
-import { ApplyInputFormContext, InputProps as BaseInputProps } from "./helpers";
+import { InputProps as BaseInputProps } from "./helpers";
 import useFileSelect from "./hooks/useFileSelect";
 import Box from "./primitives/Box";
 
@@ -160,4 +160,4 @@ const FileSelect = (props: FileSelectProps & InputProps) => {
     );
 };
 
-export default ApplyInputFormContext(FileSelect);
+export default FileSelect;

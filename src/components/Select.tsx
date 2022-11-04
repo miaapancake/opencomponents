@@ -5,7 +5,7 @@ import DownArrowIcon from "../icons/arrow-down-icon.svg";
 
 import SelectContext from "./contexts/SelectContext";
 import { useTheme } from "./contexts/ThemeContext";
-import { ApplyInputFormContext, InputProps as BaseInputProps, PropsWithChildren } from "./helpers";
+import { InputProps as BaseInputProps, PropsWithChildren } from "./helpers";
 import useSelect from "./hooks/useSelect";
 import Box from "./primitives/Box";
 import SelectItem, { SelectItemProps } from "./SelectItem";
@@ -156,6 +156,6 @@ function Select({
     );
 }
 
-export default Object.assign(ApplyInputFormContext(Select), {
+export default Object.assign(Select, {
     Item: SelectItem,
 });

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React, { Fragment, useCallback } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
-import { ApplyInputFormContext, classNames, InputProps } from "./helpers";
+import { classNames, InputProps } from "./helpers";
 import { StyledTextInput } from "./TextInput";
 
 export interface TextAreaProps extends InputProps<string> {
@@ -54,4 +54,4 @@ function TextArea(props: TextAreaProps) {
     );
 }
 
-export default ApplyInputFormContext(TextArea);
+export default TextArea;

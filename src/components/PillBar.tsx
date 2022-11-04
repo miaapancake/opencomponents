@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useMemo, useRef } from "react";
 import Button from "./Button";
 import PillBarContext from "./contexts/PillBarContext";
 import {
-    ApplyInputFormContext,
+    EventKey,
     InputProps as BaseInputProps,
     PropsWithChildren,
     toggleOrSetValue,
@@ -72,7 +72,7 @@ export interface PillBarProps {
 }
 
 interface PillProps {
-    value: string | number;
+    value: EventKey;
 }
 
 export function Pill(props: React.PropsWithChildren<PillProps>) {
@@ -143,4 +143,4 @@ function PillBar({
     );
 }
 
-export default ApplyInputFormContext(PillBar);
+export default PillBar;

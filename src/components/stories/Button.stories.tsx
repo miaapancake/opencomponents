@@ -42,13 +42,13 @@ const GroupTemplate = () => {
 
     return (
         <>
-            <ButtonGroup onSelect={setSelected} selected={selected}>
+            <ButtonGroup onChange={setSelected} value={selected}>
                 <Button eventKey={1}>1</Button>
                 <Button eventKey={2}>2</Button>
                 <Button eventKey={3}>3</Button>
                 <Button eventKey={4}>4</Button>
             </ButtonGroup>
-            <ButtonGroup onSelect={setSelected} selected={selected}>
+            <ButtonGroup onChange={setSelected} value={selected}>
                 <Button buttonStyle="primary" eventKey={1}>
                     1
                 </Button>
@@ -62,7 +62,7 @@ const GroupTemplate = () => {
                     4
                 </Button>
             </ButtonGroup>
-            <ButtonGroup onSelect={setSelected} selected={selected}>
+            <ButtonGroup onChange={setSelected} value={selected}>
                 <Button buttonStyle="secondary" eventKey={1}>
                     1
                 </Button>

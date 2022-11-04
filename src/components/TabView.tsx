@@ -8,7 +8,7 @@ import Box from "./primitives/Box";
 import TabViewHeader from "./TabViewHeader";
 import TabViewItem from "./TabViewItem";
 
-interface TabViewProps<T extends EventKey> {
+export interface TabViewProps<T extends EventKey> {
     defaultSelected?: T;
     selected?: T;
     onSelect?: (key: T) => void;

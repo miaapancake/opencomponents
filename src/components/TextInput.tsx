@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 
 import { useTheme } from "./contexts/ThemeContext";
-import { ApplyInputFormContext, InputProps } from "./helpers";
+import { InputProps } from "./helpers";
 import Box from "./primitives/Box";
 
 export interface TextInputProps extends InputProps<string> {
@@ -77,4 +77,4 @@ const TextInput = (props: TextInputProps) => {
 
 TextInput.displayName = "TextInput";
 
-export default ApplyInputFormContext(TextInput, "");
+export default TextInput;
