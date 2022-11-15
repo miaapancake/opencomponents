@@ -66,11 +66,10 @@ const TextInput = (props: TextInputProps) => {
                 type={props.type ?? "text"}
                 maxLength={props.maxLength}
                 onChange={(e) => onChange(e.target.value)}
-                onBlur={() => props.onBlur?.call(undefined)}
+                onBlur={(e) => props.onBlur?.call(undefined, e.target.value)}
                 value={props.value}
                 placeholder={props.placeholder}
             />
-            {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
         </StyledTextInput>
     );
 };

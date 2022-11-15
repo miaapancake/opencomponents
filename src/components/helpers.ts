@@ -1,4 +1,3 @@
-import Joi from "joi";
 import React, { CSSProperties } from "react";
 
 export type Maybe<T> = T | undefined;
@@ -10,8 +9,6 @@ export interface OptionalInputProps<ValueType> extends ComponentBase {
     onChange?: (value: ValueType) => void;
     onBlur?: (value?: EventKey) => void;
     name?: string;
-    validation?: Joi.Schema;
-    error?: string;
 }
 
 export interface InputProps<ValueType> extends ComponentBase {
@@ -19,8 +16,6 @@ export interface InputProps<ValueType> extends ComponentBase {
     onChange: (value: ValueType) => void;
     onBlur?: (value?: EventKey) => void;
     name?: string;
-    validation?: Joi.Schema;
-    error?: string;
 }
 /**
  * Reducer function that splits the array into chunks of size n

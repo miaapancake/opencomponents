@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { Fragment, useCallback } from "react";
+import React, { useCallback } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
 import { classNames, InputProps } from "./helpers";
@@ -49,7 +49,6 @@ function TextArea(props: TextAreaProps) {
                 onBlur={() => props.onBlur?.call(this)}
                 placeholder={props.placeholder}
             />
-            {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
         </StyledTextArea>
     );
 }

@@ -28,14 +28,18 @@ export default {
             </div>
         ),
     ],
-    argTypes: {},
+    argTypes: {
+        onChange: {
+            control: false,
+        },
+    },
 } as ComponentMeta<typeof PillBar>;
 
 const Template = (args: PillBarProps) => {
     const [value, setValue] = useState<string[]>();
 
     return (
-        <PillBar onChange={setValue} value={value} {...args}>
+        <PillBar {...args} onChange={setValue} value={value}>
             <Pill value="walk">
                 <StyledHikeIcon />
                 <span>Walk</span>

@@ -107,7 +107,6 @@ function Select({
             >
                 <span>{displayValue ?? placeholder ?? "Select..."}</span>
                 <StyledDownArrowIcon open={visible} />
-                {props.error ? <div className="oc-error-message">{props.error}</div> : <></>}
             </StyledSelectValue>
             <SelectContext.Provider value={contextValue}>
                 {visible ? (

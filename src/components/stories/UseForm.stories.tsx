@@ -17,16 +17,29 @@ export default {
     ],
 } as ComponentMeta<typeof Fragment>;
 
-export const Simple = () => {
+const Error = (error: string) => (
+    <div style={{ color: "Red", fontSize: "1.1em", marginTop: "10px", fontFamily: "sans-serif" }}>
+        {error}
+    </div>
+);
 
-    const { register, submit } = useForm();
+export const Simple = () => {
+    const { register, submit, errors } = useForm();
 
     return (
         <form {...submit((data) => alert(JSON.stringify(data)))}>
-            <TextInput placeholder="username" {...register("name")} />
-            <TextInput placeholder="password" {...register("password")} type="password" />
+            <TextInput
+                placeholder="username"
+                {...register("name", { value: "", required: true })}
+            />
+            {errors["name"]?.map(Error)}
+            <TextInput
+                placeholder="password"
+                {...register("password", { value: "", required: true })}
+                type="password"
+            />
+            {errors["password"]?.map(Error)}
             <Submit>Sign In</Submit>
         </form>
     );
-
-}
+};

@@ -1,18 +1,15 @@
 import styled from "@emotion/styled";
-import React, { useContext } from "react";
+import React from "react";
 
 import { useTheme } from "./contexts/ThemeContext";
-import {
-    ComponentBase,
-    PropsWithChildOfType
-} from "./helpers";
+import { ComponentBase, PropsWithChildOfType } from "./helpers";
 
 export interface ButtonProps extends ComponentBase {
     onClick?: () => void;
     buttonStyle?: "primary" | "flat" | "secondary";
 }
 
-const BaseSubmit = styled.input<ButtonProps>(({ buttonStyle }) => {
+const BaseSubmit = styled.input<ButtonProps>(() => {
     const theme = useTheme();
     return {
         margin: "10px 0px",
@@ -39,7 +36,6 @@ export default function Button({
     children,
     ...props
 }: PropsWithChildOfType<ButtonProps, string>) {
-
     return (
         <BaseSubmit
             type="submit"
