@@ -1,6 +1,7 @@
 .storybook
 src
 tools
+tests
 .gitignore
 tsconfig.json
 tsup.config.js
