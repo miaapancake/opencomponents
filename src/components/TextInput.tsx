@@ -39,6 +39,7 @@ export const StyledInput = styled.input({
     fontSize: "1.1em",
     boxSizing: "border-box",
     width: "100%",
+    color: "inherit"
 });
 
 const TextInput = (props: TextInputProps) => {
