@@ -23,3 +23,5 @@ export { default as FormSubmit } from "./components/FormSubmit";
 
 export { default as Button } from "./components/Button";
 export { default as ButtonGroup } from "./components/ButtonGroup";
+
+export { ThemeProvider } from "./components/contexts/ThemeContext";
