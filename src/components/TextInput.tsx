@@ -23,6 +23,8 @@ export const StyledTextInput = styled(Box)(() => {
         transitionTimingFunction: "ease-out",
         backgroundColor: theme.inputBackgroundColor,
         fontFamily: theme.defaultFont,
+        color: theme.textPrimaryColor,
+        fill: theme.textPrimaryColor,
         ":focus-within": {
             backgroundColor: theme.inputBackgroundColorActive,
         },

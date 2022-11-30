@@ -35,6 +35,7 @@ const StyledSelectValue = styled(Box)<{ open: boolean }>(({ open }) => {
         cursor: "pointer",
         background: open ? theme.inputBackgroundColorActive : theme.inputBackgroundColor,
         color: theme.textPrimaryColor,
+        fill: theme.textPrimaryColor,
     };
 });
 
