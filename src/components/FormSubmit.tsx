@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React, { PropsWithChildren } from "react";
-import { useTheme } from "./contexts/ThemeContext";
 
+import { useTheme } from "./contexts/ThemeContext";
 import { ComponentBase } from "./helpers";
 
 type FormSubmitProps = ComponentBase;
@@ -31,10 +31,7 @@ export default function FormSubmit({
     style,
 }: PropsWithChildren<FormSubmitProps>) {
     return (
-        <BaseButton
-            className={className}
-            style={style}
-        >
+        <BaseButton className={className} style={style}>
             {children}
         </BaseButton>
     );
